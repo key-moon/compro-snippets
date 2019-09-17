@@ -4,63 +4,72 @@
 ///<Author>keymoon</Author>
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute;
 using MethodImplOptions = System.Runtime.CompilerServices.MethodImplOptions;
 
-class PriorityQueue<T> where T : IComparable<T>
+class Deque<T> : IEnumerable<T>
 {
-    public int Count { get; private set; }
-    private bool Descendance;
-    private T[] data = new T[65536];
+    public int Count;
+    T[] data; int FrontInd, BackInd;
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public PriorityQueue(bool descendance = false) { Descendance = descendance; }
-    public T Top
+    public Deque() { data = new T[1 << 16]; FrontInd = 0; BackInd = data.Length - 1; Count = 0; }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public Deque(T[] elem)
+    {
+        int s = elem.Length; s |= s >> 1; s |= s >> 2; s |= s >> 4; s |= s >> 8; s |= s >> 16;
+        data = new T[++s]; elem.CopyTo(data, 0);
+        FrontInd = 0; BackInd = elem.Length - 1; Count = elem.Length;
+    }
+
+    public T Front
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        get { ValidateNonEmpty(); return data[1]; }
+        get { ValidateNoEmpty(); return data[FrontInd]; }
     }
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public T Pop()
+    public T Back
     {
-        var top = Top;
-        var elem = data[Count--];
-        int index = 1;
-        while (true)
-        {
-            if ((index << 1) >= Count)
-            {
-                if (index << 1 > Count) break;
-                if (elem.CompareTo(data[index << 1]) > 0 ^ Descendance) data[index] = data[index <<= 1];
-                else break;
-            }
-            else
-            {
-                var nextIndex = data[index << 1].CompareTo(data[(index << 1) + 1]) <= 0 ^ Descendance ? (index << 1) : (index << 1) + 1;
-                if (elem.CompareTo(data[nextIndex]) > 0 ^ Descendance) data[index] = data[index = nextIndex];
-                else break;
-            }
-        }
-        data[index] = elem;
-        return top;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        get { ValidateNoEmpty(); return data[BackInd]; }
     }
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Push(T value)
+
+    public T this[int index]
     {
-        int index = ++Count;
-        if (data.Length == Count) Extend(data.Length * 2);
-        while ((index >> 1) != 0)
-        {
-            if (data[index >> 1].CompareTo(value) > 0 ^ Descendance) data[index] = data[index >>= 1];
-            else break;
-        }
-        data[index] = value;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        get { if (index >= Count) throw new Exception(); return data[FrontInd + index & data.Length - 1]; }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        set { if (index >= Count) throw new Exception(); data[FrontInd + index & data.Length - 1] = value; }
     }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void PushFront(T elem) { if (Count == data.Length) Extend(data.Length << 1); Count++; data[FrontInd = (FrontInd - 1) & data.Length - 1] = elem; }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public T PopFront() { var res = Front; FrontInd = (FrontInd + 1) & data.Length - 1; Count--; return res; }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void PushBack(T elem) { if (Count == data.Length) Extend(data.Length << 1); Count++; data[BackInd = (BackInd + 1) & data.Length - 1] = elem; }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public T PopBack() { var res = Back; BackInd = (BackInd - 1) & data.Length - 1; Count--; return res; }
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void Extend(int newSize)
     {
-        T[] newDatas = new T[newSize];
-        data.CopyTo(newDatas, 0);
-        data = newDatas;
+        T[] newData = new T[newSize];
+        if (0 < Count)
+        {
+            if (FrontInd <= BackInd) Array.Copy(data, FrontInd, newData, 0, Count);
+            else
+            {
+                Array.Copy(data, FrontInd, newData, 0, data.Length - FrontInd);
+                Array.Copy(data, 0, newData, data.Length - FrontInd, BackInd + 1);
+            }
+        }
+        data = newData; FrontInd = 0; BackInd = Count - 1;
     }
-    private void ValidateNonEmpty() { if (Count == 0) throw new Exception(); }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private void ValidateNoEmpty() { if (Count == 0) throw new Exception(); }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public IEnumerator<T> GetEnumerator() { for (int i = FrontInd; i != BackInd; i = i + 1 & data.Length - 1) yield return data[i]; yield return data[BackInd]; }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    IEnumerator IEnumerable.GetEnumerator() { return GetEnumerator(); }
 }
