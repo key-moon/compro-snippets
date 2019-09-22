@@ -11,13 +11,6 @@ struct Vector
 {
     public long x;
     public long y;
-    public long this[int index]
-    {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        get { if (index == 0) return x; else return y; }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        set { if (index == 0) x = value; else y = value; }
-    }
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Vector(long x, long y) { this.x = x; this.y = y; }
     public long this[int index]
