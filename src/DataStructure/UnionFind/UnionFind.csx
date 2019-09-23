@@ -1,7 +1,7 @@
-﻿///<Title>UnionFind</Title>
-///<Shortcut>uf</Shortcut>
-///<Description>素集合データ構造</Description>
-///<Author>keymoon</Author>
+﻿///Title : UnionFind
+///Shortcut : uf
+///Description : 素集合データ構造
+///Author : keymoon
 
 using System.Collections.Generic;
 using System.Linq;

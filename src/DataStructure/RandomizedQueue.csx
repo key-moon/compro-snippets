@@ -1,7 +1,7 @@
-﻿///<Title>Randomized Queue</Title>
-///<Shortcut>rqueue</Shortcut>
-///<Description>ランダムに要素をPopするQueue</Description>
-///<Author>keymoon</Author>
+﻿///Title : Randomized Queue
+///Shortcut : rqueue</Shortcut>
+///Description : ランダムに要素をPopするQueue
+///Author : keymoon
 
 using System;
 using MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute;

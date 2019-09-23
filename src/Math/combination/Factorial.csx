@@ -1,9 +1,9 @@
 ﻿#load "../ModInt.csx"
 
-///<Title>Factorial</Title>
-///<Shortcut>factorial</Shortcut>
-///<Description>階乗</Description>
-///<Author>keymoon</Author>
+///Title : Factorial
+///Shortcut : factorial
+///Description : 階乗
+///Author : keymoon
 
 using System.Linq;
 using System.Collections.Generic;

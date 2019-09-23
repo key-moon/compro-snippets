@@ -1,7 +1,7 @@
-﻿///<Title>PartialPersistentUnionFind</Title>
-///<Shortcut>ppuf</Shortcut>
-///<Description>部分永続Union-Find</Description>
-///<Author>keymoon</Author>
+﻿///Title : PartialPersistentUnionFind
+///Shortcut : ppuf
+///Description : 部分永続Union-Find
+///Author : keymoon
 
 using System;
 using System.Collections.Generic;

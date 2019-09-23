@@ -1,7 +1,7 @@
-﻿///<Title>ReadLineSplitDouble</Title>
-///<Shortcut>rlsdouble</Shortcut>
-///<Description>複数行複数データの読み込み(double型)</Description>
-///<Author>keymoon</Author>
+﻿///Title : ReadLineSplitDouble
+///Shortcut : rlsdouble</Shortcut>
+///Description : 複数行複数データの読み込み(double型)
+///Author : keymoon
 
 using System;
 using System.Linq;

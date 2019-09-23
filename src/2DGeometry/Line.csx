@@ -1,9 +1,9 @@
 ﻿#load "FloatVector.csx"
 
-///<Title>Line2D</Title>
-///<Shortcut>line</Shortcut>
-///<Description>線分</Description>
-///<Author>keymoon</Author>
+///Title : Line2D
+///Shortcut : line
+///Description : 線分
+///Author : keymoon
 
 using System;
 using MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute;

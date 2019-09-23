@@ -1,7 +1,7 @@
-﻿///<Title>UnionFind with Data</Title>
-///<Shortcut>ufd</Shortcut>
-///<Description>データ保持可能Union-Find</Description>
-///<Author>keymoon</Author>
+﻿///Title : UnionFind with Data
+///Shortcut : ufd
+///Description : データ保持可能Union-Find
+///Author : keymoon
 
 using System;
 using System.Linq;

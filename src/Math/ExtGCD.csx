@@ -1,7 +1,7 @@
-﻿///<Title>Extended Euclidean algorithm</Title>
-///<Shortcut>extgcd</Shortcut>
-///<Description>gcd=ax+byなるx,yを見つける</Description>
-///<Author>keymoon</Author>
+﻿///Title : Extended Euclidean algorithm
+///Shortcut : extgcd</Shortcut>
+///Description : gcd=ax+byなるx,yを見つける
+///Author : keymoon
 
 static long ExtGCD(long a, long b, out long x, out long y)
 {

@@ -1,6 +1,6 @@
-﻿///<Title>998244353</Title>
-///<Shortcut>mod</Shortcut>
-///<Description>998244353</Description>
-///<Author>keymoon</Author>
+﻿///Title : 998244353
+///Shortcut : mod
+///Description : 998244353
+///Author : keymoon
 
 998244353

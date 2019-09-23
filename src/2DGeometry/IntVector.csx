@@ -1,7 +1,7 @@
-﻿///<Title>Vector2D(integer coordinate)</Title>
-///<Shortcut>ivector</Shortcut>
-///<Description>整数で座標を扱う二次元ベクトル</Description>
-///<Author>keymoon</Author>
+﻿///Title : Vector2D(integer coordinate)
+///Shortcut : ivector
+///Description : 整数で座標を扱う二次元ベクトル
+///Author : keymoon
 
 using System;
 using MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute;

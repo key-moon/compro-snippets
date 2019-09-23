@@ -1,7 +1,7 @@
-﻿///<Title>ReadSplitDouble</Title>
-///<Shortcut>rsdouble</Shortcut>
-///<Description>単一行複数データの読み込み(double型)</Description>
-///<Author>keymoon</Author>
+﻿///Title : ReadSplitDouble
+///Shortcut : rsdouble</Shortcut>
+///Description : 単一行複数データの読み込み(double型)
+///Author : keymoon
 
 using System;
 using System.Linq;

@@ -1,7 +1,7 @@
-﻿///<Title>ReadLong</Title>
-///<Shortcut>rlong</Shortcut>
-///<Description>単一行単一データの読み込み(long型)</Description>
-///<Author>keymoon</Author>
+﻿///Title : ReadLong
+///Shortcut : rlong</Shortcut>
+///Description : 単一行単一データの読み込み(long型)
+///Author : keymoon
 
 using System;
 

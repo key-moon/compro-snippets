@@ -1,7 +1,7 @@
-﻿///<Title>Template for Google Code Jam</Title>
-///<Shortcut>tmplgcj</Shortcut>
-///<Description>gcjのアレ</Description>
-///<Author>keymoon</Author>
+﻿///Title : Template for Google Code Jam
+///Shortcut : tmplgcj</Shortcut>
+///Description : gcjのアレ
+///Author : keymoon
 
 using System;
 using System.IO;

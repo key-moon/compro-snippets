@@ -1,7 +1,7 @@
-﻿///<Title>ReRooting</Title>
-///<Shortcut>rerooting</Shortcut>
-///<Description>全方位木DP</Description>
-///<Author>keymoon</Author>
+﻿///Title : ReRooting
+///Shortcut : rerooting</Shortcut>
+///Description : 全方位木DP
+///Author : keymoon
 
 using System;
 using System.Collections.Generic;

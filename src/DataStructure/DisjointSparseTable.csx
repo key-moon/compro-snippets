@@ -1,7 +1,7 @@
-﻿///<Title>Disjoint Sparse Table</Title>
-///<Shortcut>disjointsparsetable</Shortcut>
-///<Description>Binary-Indexed Tree</Description>
-///<Author>keymoon</Author>
+﻿///Title : Disjoint Sparse Table
+///Shortcut : disjointsparsetable</Shortcut>
+///Description : Binary-Indexed Tree
+///Author : keymoon
 
 using System;
 using MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute;

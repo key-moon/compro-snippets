@@ -1,7 +1,7 @@
-﻿///<Title>Signed Integer Reader</Title>
-///<Shortcut>sreader</Shortcut>
-///<Description>符号付き整数を読み込む</Description>
-///<Author>keymoon</Author>
+﻿///Title : Signed Integer Reader
+///Shortcut : sreader</Shortcut>
+///Description : 符号付き整数を読み込む
+///Author : keymoon
 
 using System;
 using MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute;

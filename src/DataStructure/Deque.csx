@@ -1,7 +1,7 @@
-﻿///<Title>Double-Ended Queue</Title>
-///<Shortcut>deque</Shortcut>
-///<Description>両端Queue</Description>
-///<Author>keymoon</Author>
+﻿///Title : Double-Ended Queue
+///Shortcut : deque
+///Description : 両端Queue
+///Author : keymoon
 
 using System;
 using System.Collections;

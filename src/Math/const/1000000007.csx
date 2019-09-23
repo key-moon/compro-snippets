@@ -1,6 +1,6 @@
-﻿///<Title>1e9+7</Title>
-///<Shortcut>mod</Shortcut>
-///<Description>1000000007</Description>
-///<Author>keymoon</Author>
+﻿///Title : 1e9+7
+///Shortcut : mod
+///Description : 1000000007
+///Author : keymoon
 
 1000000007

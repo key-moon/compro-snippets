@@ -1,7 +1,7 @@
-﻿///<Title>Binary-Indexed Tree</Title>
-///<Shortcut>bit</Shortcut>
-///<Description>Binary-Indexed Tree</Description>
-///<Author>keymoon</Author>
+﻿///Title : Binary-Indexed Tree
+///Shortcut : bit
+///Description : Binary-Indexed Tree
+///Author : keymoon
 
 using System;
 using MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute;

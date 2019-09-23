@@ -1,7 +1,7 @@
-﻿///<Title>Power</Title>
-///<Shortcut>pow</Shortcut>
-///<Description>モノイドの冪演算</Description>
-///<Author>keymoon</Author>
+﻿///Title : Power
+///Shortcut : pow</Shortcut>
+///Description : モノイドの冪演算
+///Author : keymoon
 
 #if !DECLARATIONS
 #load "ModInt.csx"

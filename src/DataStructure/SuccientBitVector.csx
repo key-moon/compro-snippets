@@ -1,7 +1,7 @@
-﻿///<Title>SuccientBitVector</Title>
-///<Shortcut>sucbv</Shortcut>
-///<Description>簡潔ビットベクトル</Description>
-///<Author>keymoon</Author>
+﻿///Title : SuccientBitVector
+///Shortcut : sucbv</Shortcut>
+///Description : 簡潔ビットベクトル
+///Author : keymoon
 
 using System;
 using MethodImplOptions = System.Runtime.CompilerServices.MethodImplOptions;

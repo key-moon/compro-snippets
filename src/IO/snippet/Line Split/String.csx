@@ -1,7 +1,7 @@
-﻿///<Title>ReadLineSplitString</Title>
-///<Shortcut>rlsstr</Shortcut>
-///<Description>複数行複数データの読み込み(string型)</Description>
-///<Author>keymoon</Author>
+﻿///Title : ReadLineSplitString
+///Shortcut : rlsstr</Shortcut>
+///Description : 複数行複数データの読み込み(string型)
+///Author : keymoon
 
 using System;
 using System.Linq;

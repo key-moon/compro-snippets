@@ -1,7 +1,7 @@
-﻿///<Title>Euclidean algorithm</Title>
-///<Shortcut>gcd</Shortcut>
-///<Description>最大公約数を見つける</Description>
-///<Author>keymoon</Author>
+﻿///Title : Euclidean algorithm
+///Shortcut : gcd</Shortcut>
+///Description : 最大公約数を見つける
+///Author : keymoon
 
 static long GCD(long a, long b)
 {

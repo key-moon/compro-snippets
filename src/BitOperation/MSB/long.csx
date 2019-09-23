@@ -1,7 +1,7 @@
-﻿///<Title>Most Significant Bit(long)</Title>
-///<Shortcut>msbl</Shortcut>
-///<Description>最も上に立っているbitのindex(0-indexed)</Description>
-///<Author>keymoon</Author>
+﻿///Title : Most Significant Bit(long)
+///Shortcut : msbl</Shortcut>
+///Description : 最も上に立っているbitのindex(0-indexed)
+///Author : keymoon
 
 using MethodImplOptions = System.Runtime.CompilerServices.MethodImplOptions;
 using MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute;

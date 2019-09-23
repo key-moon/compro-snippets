@@ -1,7 +1,7 @@
-﻿///<Title>Unsigned Integer Reader</Title>
-///<Shortcut>ureader</Shortcut>
-///<Description>符号なし整数を読み込む</Description>
-///<Author>keymoon</Author>
+﻿///Title : Unsigned Integer Reader
+///Shortcut : ureader</Shortcut>
+///Description : 符号なし整数を読み込む
+///Author : keymoon
 
 using System;
 using MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute;

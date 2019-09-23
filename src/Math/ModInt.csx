@@ -1,7 +1,7 @@
-﻿///<Title>ModInt</Title>
-///<Shortcut>modint</Shortcut>
-///<Description>剰余環</Description>
-///<Author>keymoon</Author>
+﻿///Title : ModInt
+///Shortcut : modint</Shortcut>
+///Description : 剰余環
+///Author : keymoon
 
 using MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute;
 using MethodImplOptions = System.Runtime.CompilerServices.MethodImplOptions;

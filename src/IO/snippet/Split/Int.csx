@@ -1,7 +1,7 @@
-﻿///<Title>ReadSplitInt</Title>
-///<Shortcut>rsint</Shortcut>
-///<Description>単一行複数データの読み込み(int型)</Description>
-///<Author>keymoon</Author>
+﻿///Title : ReadSplitInt
+///Shortcut : rsint</Shortcut>
+///Description : 単一行複数データの読み込み(int型)
+///Author : keymoon
 
 using System;
 using System.Linq;

@@ -1,7 +1,7 @@
-﻿///<Title>PopCount(signed)</Title>
-///<Shortcut>popcountu</Shortcut>
-///<Description>符号つき整数のビットの立っている数</Description>
-///<Author>keymoon</Author>
+﻿///Title : PopCount(signed)
+///Shortcut : popcountu</Shortcut>
+///Description : 符号つき整数のビットの立っている数
+///Author : keymoon
 
 using MethodImplOptions = System.Runtime.CompilerServices.MethodImplOptions;
 using MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute;

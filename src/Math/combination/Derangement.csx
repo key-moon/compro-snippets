@@ -1,10 +1,10 @@
 ﻿#load "../ModInt.csx"
 #load "Factorial.csx"
 
-///<Title>Derangement Number</Title>
-///<Shortcut>derangement</Shortcut>
-///<Description>攪乱順列</Description>
-///<Author>keymoon</Author>
+///Title : Derangement Number
+///Shortcut : derangement
+///Description : 攪乱順列
+///Author : keymoon
 
 static ModInt DerangementNumber(int n)
 {

@@ -1,7 +1,7 @@
-﻿///<Title>SegmentTree(Point Update/Range Query)</Title>
-///<Shortcut>segtreepr</Shortcut>
-///<Description>一点更新区間取得</Description>
-///<Author>keymoon</Author>
+﻿///Title : SegmentTree(Point Update/Range Query)
+///Shortcut : segtreepr
+///Description : 一点更新区間取得
+///Author : keymoon
 
 using System;
 using MethodImplOptions = System.Runtime.CompilerServices.MethodImplOptions;

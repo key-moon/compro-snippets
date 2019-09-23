@@ -1,9 +1,9 @@
 ﻿#load "../ModInt.csx"
 
-///<Title>Matrix</Title>
-///<Shortcut>matrix</Shortcut>
-///<Description>行列</Description>
-///<Author>keymoon</Author>
+///Title : Matrix
+///Shortcut : matrix</Shortcut>
+///Description : 行列
+///Author : keymoon
 
 using MethodImplOptions = System.Runtime.CompilerServices.MethodImplOptions;
 using MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute;

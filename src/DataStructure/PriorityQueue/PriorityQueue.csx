@@ -1,7 +1,7 @@
-﻿///<Title>PriorityQueue</Title>
-///<Shortcut>pqueue</Shortcut>
-///<Description>優先度付きキュー</Description>
-///<Author>keymoon</Author>
+﻿///Title : PriorityQueue
+///Shortcut : pqueue
+///Description : 優先度付きキュー
+///Author : keymoon
 
 using System;
 using MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute;

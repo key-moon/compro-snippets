@@ -1,7 +1,7 @@
-﻿///<Title>Vector2D(float coordinate)</Title>
-///<Shortcut>fvector</Shortcut>
-///<Description>浮動小数点数で座標を扱う二次元ベクトル</Description>
-///<Author>keymoon</Author>
+﻿///Title : Vector2D(float coordinate)
+///Shortcut : fvector
+///Description : 浮動小数点数で座標を扱う二次元ベクトル
+///Author : keymoon
 
 using System;
 using MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute;

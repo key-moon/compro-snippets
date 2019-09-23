@@ -1,7 +1,7 @@
-﻿///<Title>Rolling Hash</Title>
-///<Shortcut>rollinghash</Shortcut>
-///<Description>固定modローリングハッシュ</Description>
-///<Author>keymoon</Author>
+﻿///Title : Rolling Hash
+///Shortcut : rollinghash</Shortcut>
+///Description : 固定modローリングハッシュ
+///Author : keymoon
 
 using System;
 using MethodImplOptions = System.Runtime.CompilerServices.MethodImplOptions;

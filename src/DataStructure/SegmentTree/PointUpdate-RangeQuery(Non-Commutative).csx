@@ -1,7 +1,7 @@
-﻿///<Title>SegmentTree(Range Update/Point Query, Non-Commutative operation)</Title>
-///<Shortcut>segtreerpnc</Shortcut>
-///<Description>区間更新一点取得(非可換作用)</Description>
-///<Author>keymoon</Author>
+﻿///Title : SegmentTree(Range Update/Point Query, Non-Commutative operation)
+///Shortcut : segtreerpnc
+///Description : 区間更新一点取得(非可換作用)
+///Author : keymoon
 
 using System;
 using MethodImplOptions = System.Runtime.CompilerServices.MethodImplOptions;
