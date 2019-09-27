@@ -1,5 +1,5 @@
 ﻿///Title : Unsigned Integer Reader
-///Shortcut : ureader</Shortcut>
+///Shortcut : ureader
 ///Description : 符号なし整数を読み込む
 ///Author : keymoon
 

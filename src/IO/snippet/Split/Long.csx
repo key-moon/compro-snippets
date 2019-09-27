@@ -1,5 +1,5 @@
 ﻿///Title : ReadSplitLong
-///Shortcut : rslong</Shortcut>
+///Shortcut : rslong
 ///Description : 単一行複数データの読み込み(long型)
 ///Author : keymoon
 

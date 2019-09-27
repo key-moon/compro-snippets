@@ -1,5 +1,5 @@
 ﻿///Title : Rolling Hash
-///Shortcut : rollinghash</Shortcut>
+///Shortcut : rollinghash
 ///Description : 固定modローリングハッシュ
 ///Author : keymoon
 

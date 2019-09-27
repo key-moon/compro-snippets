@@ -1,5 +1,5 @@
 ﻿///Title : Power
-///Shortcut : pow</Shortcut>
+///Shortcut : pow
 ///Description : モノイドの冪演算
 ///Author : keymoon
 

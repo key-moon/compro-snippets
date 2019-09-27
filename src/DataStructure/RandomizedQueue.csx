@@ -1,5 +1,5 @@
 ﻿///Title : Randomized Queue
-///Shortcut : rqueue</Shortcut>
+///Shortcut : rqueue
 ///Description : ランダムに要素をPopするQueue
 ///Author : keymoon
 

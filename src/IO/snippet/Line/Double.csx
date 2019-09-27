@@ -1,5 +1,5 @@
 ﻿///Title : ReadLineDouble
-///Shortcut : rldouble</Shortcut>
+///Shortcut : rldouble
 ///Description : 複数行単一データの読み込み(double型)
 ///Author : keymoon
 

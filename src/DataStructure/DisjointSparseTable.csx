@@ -1,5 +1,5 @@
 ﻿///Title : Disjoint Sparse Table
-///Shortcut : disjointsparsetable</Shortcut>
+///Shortcut : disjointsparsetable
 ///Description : Binary-Indexed Tree
 ///Author : keymoon
 

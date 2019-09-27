@@ -1,5 +1,5 @@
 ﻿///Title : ReadLineSplitInt
-///Shortcut : rlsint</Shortcut>
+///Shortcut : rlsint
 ///Description : 複数行複数データの読み込み(int型)
 ///Author : keymoon
 

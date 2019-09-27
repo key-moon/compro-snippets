@@ -1,5 +1,5 @@
 ﻿///Title : SuccientBitVector
-///Shortcut : sucbv</Shortcut>
+///Shortcut : sucbv
 ///Description : 簡潔ビットベクトル
 ///Author : keymoon
 

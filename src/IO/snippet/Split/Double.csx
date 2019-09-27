@@ -1,5 +1,5 @@
 ﻿///Title : ReadSplitDouble
-///Shortcut : rsdouble</Shortcut>
+///Shortcut : rsdouble
 ///Description : 単一行複数データの読み込み(double型)
 ///Author : keymoon
 

@@ -1,5 +1,5 @@
 ﻿///Title : Extended Euclidean algorithm
-///Shortcut : extgcd</Shortcut>
+///Shortcut : extgcd
 ///Description : gcd=ax+byなるx,yを見つける
 ///Author : keymoon
 

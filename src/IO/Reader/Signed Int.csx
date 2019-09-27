@@ -1,5 +1,5 @@
 ﻿///Title : Signed Integer Reader
-///Shortcut : sreader</Shortcut>
+///Shortcut : sreader
 ///Description : 符号付き整数を読み込む
 ///Author : keymoon
 

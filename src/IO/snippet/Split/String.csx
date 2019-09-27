@@ -1,5 +1,5 @@
 ﻿///Title : ReadSplitString
-///Shortcut : rsstr</Shortcut>
+///Shortcut : rsstr
 ///Description : 単一行複数データの読み込み(string型)
 ///Author : keymoon
 

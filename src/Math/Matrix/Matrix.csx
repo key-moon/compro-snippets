@@ -1,7 +1,7 @@
 ﻿#load "../ModInt.csx"
 
 ///Title : Matrix
-///Shortcut : matrix</Shortcut>
+///Shortcut : matrix
 ///Description : 行列
 ///Author : keymoon
 

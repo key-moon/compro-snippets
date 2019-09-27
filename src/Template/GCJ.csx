@@ -1,5 +1,5 @@
 ﻿///Title : Template for Google Code Jam
-///Shortcut : tmplgcj</Shortcut>
+///Shortcut : tmplgcj
 ///Description : gcjのアレ
 ///Author : keymoon
 
@@ -28,4 +28,4 @@ static class P
     {
 
     }
-}   
+}       

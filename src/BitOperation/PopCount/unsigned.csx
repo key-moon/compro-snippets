@@ -1,5 +1,5 @@
 ﻿///Title : PopCount(unsigned)
-///Shortcut : popcountu</Shortcut>
+///Shortcut : popcountu
 ///Description : 符号なし整数のビットの立っている数
 ///Author : keymoon
 

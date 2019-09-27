@@ -1,5 +1,5 @@
 ﻿///Title : ReRooting
-///Shortcut : rerooting</Shortcut>
+///Shortcut : rerooting
 ///Description : 全方位木DP
 ///Author : keymoon
 

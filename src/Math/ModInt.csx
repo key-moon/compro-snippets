@@ -1,5 +1,5 @@
 ﻿///Title : ModInt
-///Shortcut : modint</Shortcut>
+///Shortcut : modint
 ///Description : 剰余環
 ///Author : keymoon
 

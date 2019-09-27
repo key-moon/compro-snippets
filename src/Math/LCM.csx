@@ -1,7 +1,7 @@
 ﻿#load "GCD.csx"
 
 ///Title : Euclidean algorithm
-///Shortcut : gcd</Shortcut>
+///Shortcut : gcd
 ///Description : 最大公約数を見つける
 ///Author : keymoon
 

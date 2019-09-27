@@ -1,5 +1,5 @@
 ﻿///Title : Most Significant Bit(int)
-///Shortcut : msbi</Shortcut>
+///Shortcut : msbi
 ///Description : 最も上に立っているbitのindex(0-indexed)
 ///Author : keymoon
 

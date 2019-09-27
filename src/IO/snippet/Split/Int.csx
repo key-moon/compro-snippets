@@ -1,5 +1,5 @@
 ﻿///Title : ReadSplitInt
-///Shortcut : rsint</Shortcut>
+///Shortcut : rsint
 ///Description : 単一行複数データの読み込み(int型)
 ///Author : keymoon
 

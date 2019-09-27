@@ -1,5 +1,5 @@
 ﻿///Title : ReadLong
-///Shortcut : rlong</Shortcut>
+///Shortcut : rlong
 ///Description : 単一行単一データの読み込み(long型)
 ///Author : keymoon
 

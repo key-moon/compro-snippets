@@ -1,5 +1,5 @@
 ﻿///Title : ReadLineInt
-///Shortcut : rlint</Shortcut>
+///Shortcut : rlint
 ///Description : 複数行単一データの読み込み(int型)
 ///Author : keymoon
 

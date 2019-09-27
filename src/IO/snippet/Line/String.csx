@@ -1,5 +1,5 @@
 ﻿///Title : ReadLineString
-///Shortcut : rlstr</Shortcut>
+///Shortcut : rlstr
 ///Description : 複数行単一データの読み込み(string型)
 ///Author : keymoon
 
