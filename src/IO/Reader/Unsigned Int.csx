@@ -8,12 +8,12 @@ using MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute;
 using MethodImplOptions = System.Runtime.CompilerServices.MethodImplOptions;
 
 #if !DECLARATIONS
-//型
-using @T = System.UInt32;
 /*
+//型
 @T = uint
 Name = UInt
 */
+using @T = System.UInt32;
 #endif
 
 static @T NextName

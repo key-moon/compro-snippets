@@ -7,11 +7,12 @@ using System;
 using System.Linq;
 
 #if !DECLARATIONS
-int height;
 /*
 //行数
 height = h
 */
+int height;
+
 #endif
 
 

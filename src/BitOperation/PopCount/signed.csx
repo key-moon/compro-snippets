@@ -7,10 +7,11 @@ using MethodImplOptions = System.Runtime.CompilerServices.MethodImplOptions;
 using MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute;
 
 #if !DECLARATIONS
-using @T = System.Int32;
 /*
+//型
 @T = int
 */
+using @T = System.Int32;
 #endif
 
 [MethodImpl(MethodImplOptions.AggressiveInlining)]
