@@ -1,6 +1,6 @@
-﻿///Title : Signed Integer Reader
-///Shortcut : sreader
-///Description : 符号付き整数を読み込む
+///Title : Reader Core
+///Shortcut : reader
+///Description : 各種Readerを格納するためのclass
 ///Author : keymoon
 
 using System;
