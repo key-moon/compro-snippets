@@ -1,4 +1,4 @@
-﻿///Title : Euclidean algorithm
+﻿///Title : Greatest Common Divisor
 ///Shortcut : gcd
 ///Description : 最大公約数を見つける
 ///Author : keymoon
