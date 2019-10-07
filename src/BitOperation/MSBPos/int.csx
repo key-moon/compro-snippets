@@ -6,8 +6,16 @@
 using MethodImplOptions = System.Runtime.CompilerServices.MethodImplOptions;
 using MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute;
 
+#if !DECLARATIONS
+/*
+//型
+@T = int
+*/
+using @T = System.Int32;
+#endif
+
 [MethodImpl(MethodImplOptions.AggressiveInlining)]
-static int MSB(int n)
+static int MSBPos(@T n)
 {
     int res = 0;
     if (0 != (n >> (res | 16))) res |= 16;
