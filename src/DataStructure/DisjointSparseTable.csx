@@ -18,7 +18,7 @@ class DisjointSparseTable<T>
     public DisjointSparseTable(T[] data, Func<T, T, T> merge)
     {
         Size = data.Length;
-        Height = GetMSB(Size) + 1;
+        Height = MSBPos(Size) + 1;
         Table = new T[Size * Height];
         Merge = merge;
         data.CopyTo(Table, 0);
@@ -47,12 +47,12 @@ class DisjointSparseTable<T>
     public T Query(int l, int r)
     {
         if (l == r) return Table[l];
-        var layer = GetMSB(l ^ r);
+        var layer = MSBPos(l ^ r);
         return Merge(Table[l + layer * Size], Table[r + layer * Size]);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    static int GetMSB(int n)
+    static int MSBPos(int n)
     {
         int res = 0;
         if (0 != (n >> (res | 16))) res |= 16;
