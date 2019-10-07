@@ -469,7 +469,7 @@
     public DisjointSparseTable(T[] data, Func&lt;T, T, T&gt; merge)
     {
         Size = data.Length;
-        Height = GetMSB(Size) + 1;
+        Height = MSBPos(Size) + 1;
         Table = new T[Size * Height];
         Merge = merge;
         data.CopyTo(Table, 0);
@@ -498,12 +498,12 @@
     public T Query(int l, int r)
     {
         if (l == r) return Table[l];
-        var layer = GetMSB(l ^ r);
+        var layer = MSBPos(l ^ r);
         return Merge(Table[l + layer * Size], Table[r + layer * Size]);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    static int GetMSB(int n)
+    static int MSBPos(int n)
     {
         int res = 0;
         if (0 != (n &gt;&gt; (res | 16))) res |= 16;
@@ -863,6 +863,9 @@
           <Namespace>System</Namespace>
         </Import>
         <Import>
+          <Namespace>System.Collections</Namespace>
+        </Import>
+        <Import>
           <Namespace>System.Collections.Generic</Namespace>
         </Import>
         <Import>
@@ -872,24 +875,22 @@
           <Namespace>MethodImplOptions = System.Runtime.CompilerServices.MethodImplOptions</Namespace>
         </Import>
       </Imports>
-      <Code Language="CSharp">class ImmutableArray&lt;T&gt;
+      <Code Language="CSharp">class ImmutableArray&lt;T&gt; : IEnumerable&lt;T&gt;
 {
-    int Size;
+    public int Length { get; private set; }
     Node Root;
 
     private ImmutableArray() { }
-    public ImmutableArray(int size)
+    public ImmutableArray(int length)
     {
-        Size = size;
+        Length = length;
 
         int RootIndex = 1;
-        while (RootIndex &lt;= size) RootIndex &lt;&lt;= 1;
+        while (RootIndex &lt;= length) RootIndex &lt;&lt;= 1;
         RootIndex &gt;&gt;= 1;
 
-        Root = new Node() { Index = RootIndex - 1 };
-
         Stack&lt;Node&gt; stack = new Stack&lt;Node&gt;();
-        stack.Push(Root);
+        stack.Push(Root = new Node() { Index = RootIndex - 1 });
         while (stack.Count &gt; 0)
         {
             var item = stack.Pop();
@@ -897,15 +898,10 @@
             var lsb = -(parentIndex + 1) &amp; (parentIndex + 1);
             if (lsb == 1) continue;
             lsb &gt;&gt;= 1;
-            var left = new Node() { Index = parentIndex - lsb };
-            item.Left = left;
-            stack.Push(left);
+            stack.Push(item.Left = new Node() { Index = parentIndex - lsb });
 
-            if (parentIndex &gt;= Size - 1) continue;
-            while (parentIndex + lsb &gt; Size) lsb &gt;&gt;= 1;
-            var right = new Node() { Index = parentIndex + lsb };
-            item.Right = right;
-            stack.Push(right);
+            while (parentIndex + lsb &gt;= Length) lsb &gt;&gt;= 1;
+            stack.Push(item.Right = new Node() { Index = parentIndex + lsb });
         }
     }
 
@@ -918,9 +914,8 @@
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public ImmutableArray&lt;T&gt; SetValue(int index, T value)
     {
-        AssertIndex(index);
         Node node = Root.GetCopy();
-        var newList = new ImmutableArray&lt;T&gt;() { Root = node, Size = Size };
+        var newList = new ImmutableArray&lt;T&gt;() { Root = node, Length = Length };
         while (index != node.Index)
         {
             if (index &lt; node.Index) node = (node.Left = node.Left.GetCopy());
@@ -933,7 +928,6 @@
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public T GetValue(int index)
     {
-        AssertIndex(index);
         Node node = Root;
         while (index != node.Index)
         {
@@ -943,28 +937,44 @@
         return node.Value;
     }
 
-    private void AssertIndex(int index)
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public IEnumerator&lt;T&gt; GetEnumerator()
     {
-        if (index &lt; 0 || Size &lt;= index) throw new IndexOutOfRangeException();
+        Stack&lt;Node&gt; stack = new Stack&lt;Node&gt;();
+        Node item = Root;
+        stack.Push(item);
+        while (item.Left != null) stack.Push(item = item.Left);
+        while (stack.Count &gt; 0)
+        {
+            yield return (item = stack.Pop()).Value;
+            if (item.Right != null)
+            {
+                stack.Push(item = item.Right);
+                while (item.Left != null) stack.Push(item = item.Left);
+            }
+        }
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public T[] ToArray()
     {
-        T[] res = new T[Size];
+        T[] res = new T[Length];
         Stack&lt;Node&gt; stack = new Stack&lt;Node&gt;();
         stack.Push(Root);
         while (stack.Count &gt; 0)
         {
             var item = stack.Pop();
-            if (!(item.Left is null))
+            if (item.Left != null)
             {
                 stack.Push(item.Left);
-                if (!(item.Right is null)) stack.Push(item.Right);
+                if (item.Right != null) stack.Push(item.Right);
             }
             res[item.Index] = item.Value;
         }
         return res;
     }
+
+    IEnumerator IEnumerable.GetEnumerator() { return GetEnumerator(); }
 
     class Node
     {
@@ -1042,7 +1052,7 @@
   </CodeSnippet>
   <CodeSnippet Format="1.0.0">
     <Header>
-      <Title>Euclidean algorithm</Title>
+      <Title>Greatest Common Divisor</Title>
       <Shortcut>gcd</Shortcut>
       <Description>最大公約数を見つける</Description>
       <Author>keymoon</Author>
@@ -1062,9 +1072,9 @@
   </CodeSnippet>
   <CodeSnippet Format="1.0.0">
     <Header>
-      <Title>Euclidean algorithm</Title>
-      <Shortcut>gcd</Shortcut>
-      <Description>最大公約数を見つける</Description>
+      <Title>Least Common Multiple</Title>
+      <Shortcut>lcm</Shortcut>
+      <Description>最小公倍数を見つける</Description>
       <Author>keymoon</Author>
     </Header>
     <Snippet>
@@ -1310,6 +1320,60 @@ class RollingHash
     <Header>
       <Title>Most Significant Bit(int)</Title>
       <Shortcut>msbi</Shortcut>
+      <Description>最も上に立っているbit(0-indexed)</Description>
+      <Author>keymoon</Author>
+    </Header>
+    <Snippet>
+      <Imports>
+        <Import>
+          <Namespace>MethodImplOptions = System.Runtime.CompilerServices.MethodImplOptions</Namespace>
+        </Import>
+        <Import>
+          <Namespace>MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute</Namespace>
+        </Import>
+      </Imports>
+      <Declarations>
+        <Literal>
+          <ID>T</ID>
+          <Default>int</Default>
+          <ToolTip>型</ToolTip>
+        </Literal>
+      </Declarations>
+      <Code Language="CSharp">[MethodImpl(MethodImplOptions.AggressiveInlining)]
+static $T$ MSB($T$ s) { s |= s &gt;&gt; 1; s |= s &gt;&gt; 2; s |= s &gt;&gt; 4; s |= s &gt;&gt; 8; s |= s &gt;&gt; 16; return (s + 1) &gt;&gt; 1; }</Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>Most Significant Bit(long)</Title>
+      <Shortcut>msbl</Shortcut>
+      <Description>最も上に立っているbit(0-indexed)</Description>
+      <Author>keymoon</Author>
+    </Header>
+    <Snippet>
+      <Imports>
+        <Import>
+          <Namespace>MethodImplOptions = System.Runtime.CompilerServices.MethodImplOptions</Namespace>
+        </Import>
+        <Import>
+          <Namespace>MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute</Namespace>
+        </Import>
+      </Imports>
+      <Declarations>
+        <Literal>
+          <ID>T</ID>
+          <Default>long</Default>
+          <ToolTip>型</ToolTip>
+        </Literal>
+      </Declarations>
+      <Code Language="CSharp">[MethodImpl(MethodImplOptions.AggressiveInlining)]
+static $T$ MSB($T$ s) { s |= s &gt;&gt; 1; s |= s &gt;&gt; 2; s |= s &gt;&gt; 4; s |= s &gt;&gt; 8; s |= s &gt;&gt; 16; s |= s &gt;&gt; 32; return (s + 1) &gt;&gt; 1; }</Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>Most Significant Bit Position(int)</Title>
+      <Shortcut>msbposi</Shortcut>
       <Description>最も上に立っているbitのindex(0-indexed)</Description>
       <Author>keymoon</Author>
     </Header>
@@ -1322,8 +1386,15 @@ class RollingHash
           <Namespace>MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute</Namespace>
         </Import>
       </Imports>
+      <Declarations>
+        <Literal>
+          <ID>T</ID>
+          <Default>int</Default>
+          <ToolTip>型</ToolTip>
+        </Literal>
+      </Declarations>
       <Code Language="CSharp">[MethodImpl(MethodImplOptions.AggressiveInlining)]
-static int MSB(int n)
+static int MSBPos($T$ n)
 {
     int res = 0;
     if (0 != (n &gt;&gt; (res | 16))) res |= 16;
@@ -1337,8 +1408,8 @@ static int MSB(int n)
   </CodeSnippet>
   <CodeSnippet Format="1.0.0">
     <Header>
-      <Title>Most Significant Bit(long)</Title>
-      <Shortcut>msbl</Shortcut>
+      <Title>Most Significant Bit Position(long)</Title>
+      <Shortcut>msbposl</Shortcut>
       <Description>最も上に立っているbitのindex(0-indexed)</Description>
       <Author>keymoon</Author>
     </Header>
@@ -1351,8 +1422,15 @@ static int MSB(int n)
           <Namespace>MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute</Namespace>
         </Import>
       </Imports>
+      <Declarations>
+        <Literal>
+          <ID>T</ID>
+          <Default>long</Default>
+          <ToolTip>型</ToolTip>
+        </Literal>
+      </Declarations>
       <Code Language="CSharp">[MethodImpl(MethodImplOptions.AggressiveInlining)]
-static int MSB(long n)
+static int MSBPos($T$ n)
 {
     int res = 0;
     if (0 != (n &gt;&gt; (res | 32))) res |= 32;
@@ -1368,7 +1446,7 @@ static int MSB(long n)
   <CodeSnippet Format="1.0.0">
     <Header>
       <Title>PopCount(signed)</Title>
-      <Shortcut>popcountu</Shortcut>
+      <Shortcut>popcounts</Shortcut>
       <Description>符号つき整数のビットの立っている数</Description>
       <Author>keymoon</Author>
     </Header>
@@ -2045,6 +2123,117 @@ static int PopCount($T$ n)
   </CodeSnippet>
   <CodeSnippet Format="1.0.0">
     <Header>
+      <Title>PotentializedUnionFind</Title>
+      <Shortcut>puf</Shortcut>
+      <Description>ポテンシャル付き素集合データ構造</Description>
+      <Author>keymoon</Author>
+    </Header>
+    <Snippet>
+      <Imports>
+        <Import>
+          <Namespace>System</Namespace>
+        </Import>
+        <Import>
+          <Namespace>System.Linq</Namespace>
+        </Import>
+        <Import>
+          <Namespace>System.Collections.Generic</Namespace>
+        </Import>
+        <Import>
+          <Namespace>MethodImplOptions = System.Runtime.CompilerServices.MethodImplOptions</Namespace>
+        </Import>
+        <Import>
+          <Namespace>MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute</Namespace>
+        </Import>
+      </Imports>
+      <Code Language="CSharp">class PotentializedUnionFind&lt;T&gt; where T : IEquatable&lt;T&gt;
+{
+    public int Size { get; private set; }
+    public int GroupCount { get; private set; }
+    public IEnumerable&lt;int&gt; AllRepresents =&gt; Parent.Where((x, y) =&gt; x == y);
+    int[] Sizes;
+    int[] Parent;
+    T[] Value;
+    Func&lt;T, T, T&gt; Operate;
+    Func&lt;T, T&gt; Inverse;
+    T Identity;
+
+    public PotentializedUnionFind(int count, Func&lt;T, T, T&gt; operate, Func&lt;T, T&gt; inverse, T identity)
+    {
+        Size = count;
+        GroupCount = count;
+        Parent = new int[count];
+        Sizes = new int[count];
+        Value = new T[count];
+        for (int i = 0; i &lt; count; i++) { Sizes[Parent[i] = i] = 1; Value[i] = identity; }
+        Operate = operate;
+        Inverse = inverse;
+        Identity = identity;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public bool TryUnite(int x, int y, T distance)
+    {
+        T xd, yd;
+        int xp = Find(x, out xd);
+        int yp = Find(y, out yd);
+
+        if (yp == xp) return Operate(distance, yd).Equals(xd);
+
+        GroupCount--;
+        if (Sizes[xp] &lt; Sizes[yp])
+        {
+            Value[xp] = Operate(Operate(Inverse(xd), distance), yd);
+            Parent[xp] = yp;
+            Sizes[yp] += Sizes[xp];
+        }
+        else
+        {
+            Value[yp] = Operate(Operate(Inverse(yd), Inverse(distance)), xd);
+            Parent[yp] = xp;
+            Sizes[xp] += Sizes[yp];
+        }
+        return true;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public int GetSize(int x) =&gt; Sizes[Find(x)];
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public T GetPotential(int x, int y)
+    {
+        T xd, yd;
+        int xp = Find(x, out xd);
+        int yp = Find(y, out yd);
+        if (yp == xp) return Operate(Inverse(xd), yd);
+        else return Identity;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public int Find(int x)
+    {
+        while (x != Parent[x]) { Value[x] = Operate(Value[x], Value[Parent[x]]); Parent[x] = Parent[Parent[x]]; x = Parent[x]; }
+        return x;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private int Find(int x, out T potential)
+    {
+        potential = Identity;
+        while (x != Parent[x])
+        {
+            Value[x] = Operate(Value[x], Value[Parent[x]]);
+            Parent[x] = Parent[Parent[x]];
+            potential = Operate(potential, Value[x]);
+            x = Parent[x];
+        }
+        return x;
+    }
+}</Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
       <Title>UnionFind with Data</Title>
       <Shortcut>ufd</Shortcut>
       <Description>データ保持可能Union-Find</Description>
@@ -2189,9 +2378,9 @@ static int PopCount($T$ n)
   </CodeSnippet>
   <CodeSnippet Format="1.0.0">
     <Header>
-      <Title>Signed Integer Reader</Title>
-      <Shortcut>sreader</Shortcut>
-      <Description>符号付き整数を読み込む</Description>
+      <Title>Reader Core</Title>
+      <Shortcut>reader</Shortcut>
+      <Description>各種Readerを格納するためのclass</Description>
       <Author>keymoon</Author>
     </Header>
     <Snippet>
@@ -2199,6 +2388,29 @@ static int PopCount($T$ n)
         <Import>
           <Namespace>System</Namespace>
         </Import>
+        <Import>
+          <Namespace>System.IO</Namespace>
+        </Import>
+      </Imports>
+      <Code Language="CSharp">static class Reader
+{
+    const int BUF_SIZE = 1 &lt;&lt; 12;
+    static Stream Stream = Console.OpenStandardInput();
+    static byte[] Buffer = new byte[BUF_SIZE];
+    static int ptr = 0;
+    static void Move() { if (++ptr &gt;= Buffer.Length) { Stream.Read(Buffer, 0, BUF_SIZE); ptr = 0; } }
+}</Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>Signed Integer Reader</Title>
+      <Shortcut>sreader</Shortcut>
+      <Description>符号付き整数を読み込む</Description>
+      <Author>keymoon</Author>
+    </Header>
+    <Snippet>
+      <Imports>
         <Import>
           <Namespace>MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute</Namespace>
         </Import>
@@ -2218,21 +2430,14 @@ static int PopCount($T$ n)
           <ToolTip />
         </Literal>
       </Declarations>
-      <Code Language="CSharp">static $T$ Next$Name$
+      <Code Language="CSharp">public static $T$ NextS$Name$
 {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     get
     {
-        $T$ res = 0;
-        int next = Console.In.Read();
-        int sign = 1;
-        while (45 &gt; next || next &gt; 57) next = Console.In.Read();
-        if (next == 45) { next = Console.In.Read(); sign = -1; }
-        while (48 &lt;= next &amp;&amp; next &lt;= 57)
-        {
-            res = res * 10 + next - 48;
-            next = Console.In.Read();
-        }
+        $T$ res = 0; int sign = 1; while (Buffer[ptr] &lt; 45) Move();
+        if (Buffer[ptr] == 45) { Move(); sign = -1; }
+        do { res = res * 10 + (Buffer[ptr] ^ 48); Move(); } while (48 &lt;= Buffer[ptr]);
         return res * sign;
     }
 }</Code>
@@ -2247,9 +2452,6 @@ static int PopCount($T$ n)
     </Header>
     <Snippet>
       <Imports>
-        <Import>
-          <Namespace>System</Namespace>
-        </Import>
         <Import>
           <Namespace>MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute</Namespace>
         </Import>
@@ -2269,19 +2471,13 @@ static int PopCount($T$ n)
           <ToolTip />
         </Literal>
       </Declarations>
-      <Code Language="CSharp">static $T$ Next$Name$
+      <Code Language="CSharp">public static $T$ Next$Name$
 {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     get
     {
-        $T$ res = 0;
-        int next = Console.In.Read();
-        while (48 &gt; next || next &gt; 57) next = Console.In.Read();
-        while (48 &lt;= next &amp;&amp; next &lt;= 57)
-        {
-            res = res * 10 + ($T$)next - 48;
-            next = Console.In.Read();
-        }
+        $T$ res = 0; while (Buffer[ptr] &lt; 48) Move();
+        do { res = res * 10 + (Buffer[ptr] ^ 48); Move(); } while (48 &lt;= Buffer[ptr]);
         return res;
     }
 }</Code>
