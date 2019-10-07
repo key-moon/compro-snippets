@@ -1,4 +1,4 @@
-﻿///Title : Most Significant Bit(int)
+﻿///Title : Most Significant Bit Position(int)
 ///Shortcut : msbposi
 ///Description : 最も上に立っているbitのindex(0-indexed)
 ///Author : keymoon
