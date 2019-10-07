@@ -1,5 +1,5 @@
 ﻿///Title : Most Significant Bit(long)
-///Shortcut : msbl
+///Shortcut : msbposl
 ///Description : 最も上に立っているbitのindex(0-indexed)
 ///Author : keymoon
 
