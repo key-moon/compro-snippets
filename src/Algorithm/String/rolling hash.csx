@@ -7,7 +7,7 @@ using System;
 using MethodImplOptions = System.Runtime.CompilerServices.MethodImplOptions;
 using MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute;
 
-#if !DECLARATION
+#if !DECLARATIONS
 const int MAX_LENGTH = 500000;
 #endif
 
