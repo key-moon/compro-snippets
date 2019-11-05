@@ -5,6 +5,7 @@
 
 using System;
 using System.IO;
+using static Reader;
 
 static class Reader
 {
