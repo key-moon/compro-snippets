@@ -1,8 +1,4 @@
-﻿///Title : Binary-Indexed Tree
-///Shortcut : bit
-///Description : Binary-Indexed Tree
-///Author : keymoon
-
+﻿
 using System;
 using System.Collections.Generic;
 using MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute;
