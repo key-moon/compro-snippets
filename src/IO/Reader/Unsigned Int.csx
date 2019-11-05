@@ -1,4 +1,6 @@
-﻿///Title : Unsigned Integer Reader
+﻿#load "_global.csx"
+
+///Title : Unsigned Integer Reader
 ///Shortcut : ureader
 ///Description : 符号なし整数を読み込む
 ///Author : keymoon
@@ -21,7 +23,7 @@ public static @T NextName
     get
     {
         @T res = 0; while (Buffer[ptr] < 48) Move();
-        do { res = res * 10 + (Buffer[ptr] ^ 48); Move(); } while (48 <= Buffer[ptr]);
+        do { res = res * 10 + (@T)(Buffer[ptr] ^ 48); Move(); } while (48 <= Buffer[ptr]);
         return res;
     }
 }

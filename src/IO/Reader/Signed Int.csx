@@ -1,4 +1,6 @@
-﻿///Title : Signed Integer Reader
+﻿#load "_global.csx"
+
+///Title : Signed Integer Reader
 ///Shortcut : sreader
 ///Description : 符号付き整数を読み込む
 ///Author : keymoon
@@ -15,7 +17,7 @@ Name = Int
 using @T = System.Int32;
 #endif
 
-public static @T NextSName
+public static @T NextName
 {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     get
