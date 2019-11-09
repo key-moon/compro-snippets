@@ -36,6 +36,10 @@ class SegmentTree<T>
         set { Propagate(index += LeafCount); Operators[index] = value; }
     }
 
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void Operate(int i, T x) { Propagate(i += LeafCount); Operators[i] = Merge(Operators[i], x); }
+
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Operate(int l, int r, T x)
     {

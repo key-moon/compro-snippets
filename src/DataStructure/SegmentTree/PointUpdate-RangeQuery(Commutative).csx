@@ -1,5 +1,5 @@
 ﻿///Title : SegmentTree(Range Update/Point Query, Commutative operation)
-///Shortcut : segtreerpnc
+///Shortcut : segtreerpc
 ///Description : 区間更新一点取得(可換作用)
 ///Author : keymoon
 
@@ -30,7 +30,7 @@ class SegmentTree<T>
         get { return Query(index); }
     }
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Operate(int i, T x) { Operators[i] = Merge(Operators[i], x); }
+    public void Operate(int i, T x) { i += LeafCount; Operators[i] = Merge(Operators[i], x); }
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Operate(int l, int r, T x)
     {
