@@ -1716,7 +1716,7 @@ static int PopCount($T$ n)
   <CodeSnippet Format="1.0.0">
     <Header>
       <Title>SegmentTree(Range Update/Point Query, Commutative operation)</Title>
-      <Shortcut>segtreerpnc</Shortcut>
+      <Shortcut>segtreerpc</Shortcut>
       <Description>区間更新一点取得(可換作用)</Description>
       <Author>keymoon</Author>
     </Header>
@@ -1755,7 +1755,7 @@ static int PopCount($T$ n)
         get { return Query(index); }
     }
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Operate(int i, T x) { Operators[i] = Merge(Operators[i], x); }
+    public void Operate(int i, T x) { i += LeafCount; Operators[i] = Merge(Operators[i], x); }
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Operate(int l, int r, T x)
     {
@@ -1823,6 +1823,10 @@ static int PopCount($T$ n)
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         set { Propagate(index += LeafCount); Operators[index] = value; }
     }
+
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void Operate(int i, T x) { Propagate(i += LeafCount); Operators[i] = Merge(Operators[i], x); }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Operate(int l, int r, T x)
