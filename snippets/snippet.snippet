@@ -911,6 +911,33 @@
   </CodeSnippet>
   <CodeSnippet Format="1.0.0">
     <Header>
+      <Title>Divisors</Title>
+      <Shortcut>divisors</Shortcut>
+      <Description>約数列挙</Description>
+      <Author>keymoon</Author>
+    </Header>
+    <Snippet>
+      <Imports>
+        <Import>
+          <Namespace>System</Namespace>
+        </Import>
+        <Import>
+          <Namespace>System.Collections.Generic</Namespace>
+        </Import>
+        <Import>
+          <Namespace>static System.Math</Namespace>
+        </Import>
+      </Imports>
+      <Code Language="CSharp">static IEnumerable&lt;long&gt; Divisors(long n)
+{
+    var max = (int)Ceiling(Sqrt(n));
+    for (int i = 1; i &lt;= max; i++)
+        if (n % i == 0) { yield return i; yield return n / i; }
+}</Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
       <Title>Extended Euclidean algorithm</Title>
       <Shortcut>extgcd</Shortcut>
       <Description>gcd=ax+byなるx,yを見つける</Description>
