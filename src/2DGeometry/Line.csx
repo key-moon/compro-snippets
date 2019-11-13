@@ -23,8 +23,8 @@ struct Line
         double ramda = ((b.b.y - b.a.y) * (b.b.x - a.a.x) - (b.b.x - b.a.x) * (b.b.y - a.a.y)) / delta;
         if (!allowOutOfRegion)
         {
-            double mu = ((a.b.x - a.a.x) * (b.b.y - a.a.y) - (a.b.y - a.a.y) * (b.b.x - a.a.x));
-            if (mu < 0 || delta < mu || ramda < 0 || 1 < ramda) return null;
+            double mu = ((a.b.x - a.a.x) * (b.b.y - a.a.y) - (a.b.y - a.a.y) * (b.b.x - a.a.x)) / delta;
+            if (mu < 0 || 1 < mu || ramda < 0 || 1 < ramda) return null;
         }
         return new Vector(a.a.x + ramda * (a.b.x - a.a.x), a.a.y + ramda * (a.b.y - a.a.y));
     }
