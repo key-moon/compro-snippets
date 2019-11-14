@@ -2,119 +2,6 @@
 <CodeSnippets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
   <CodeSnippet Format="1.0.0">
     <Header>
-      <Title>Vector2D(float coordinate)</Title>
-      <Shortcut>fvector</Shortcut>
-      <Description>浮動小数点数で座標を扱う二次元ベクトル</Description>
-      <Author>keymoon</Author>
-    </Header>
-    <Snippet>
-      <Imports>
-        <Import>
-          <Namespace>System</Namespace>
-        </Import>
-        <Import>
-          <Namespace>MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute</Namespace>
-        </Import>
-        <Import>
-          <Namespace>MethodImplOptions = System.Runtime.CompilerServices.MethodImplOptions</Namespace>
-        </Import>
-      </Imports>
-      <Code Language="CSharp">struct Vector
-{
-    public double x;
-    public double y;
-    public double this[int index]
-    {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        get { if (index == 0) return x; else return y; }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        set { if (index == 0) x = value; else y = value; }
-    }
-    public double Length =&gt; x * x + y * y;
-    public double SqrtLength =&gt; Math.Sqrt(Length);
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Vector(double x, double y) { this.x = x; this.y = y; }
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Vector RotateVector(double radian) =&gt; new Vector(x * Math.Cos(radian) - y * Math.Sin(radian), x * Math.Sin(radian) + y * Math.Cos(radian));
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    static public double CrossProduct(Vector a, Vector b) =&gt; a.x * b.y - a.y * b.x;
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    static public double InnerProduct(Vector a, Vector b) =&gt; a.x * b.x + a.y * b.y;
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Vector operator +(Vector a, Vector b) =&gt; new Vector(a.x + b.x, a.y + b.y);
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Vector operator -(Vector a, Vector b) =&gt; new Vector(a.x - b.x, a.y - b.y);
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool operator ==(Vector a, Vector b) =&gt; a.x == b.x &amp;&amp; a.y == b.y;
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool operator !=(Vector a, Vector b) =&gt; a.x != b.x || a.y != b.y;
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public override bool Equals(object obj) =&gt; this == (Vector)obj;
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public override int GetHashCode() =&gt; x.GetHashCode() * 1000000007 + y.GetHashCode();
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public override string ToString() =&gt; $$"({x},{y})";
-}</Code>
-    </Snippet>
-  </CodeSnippet>
-  <CodeSnippet Format="1.0.0">
-    <Header>
-      <Title>Vector2D(integer coordinate)</Title>
-      <Shortcut>ivector</Shortcut>
-      <Description>整数で座標を扱う二次元ベクトル</Description>
-      <Author>keymoon</Author>
-    </Header>
-    <Snippet>
-      <Imports>
-        <Import>
-          <Namespace>System</Namespace>
-        </Import>
-        <Import>
-          <Namespace>MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute</Namespace>
-        </Import>
-        <Import>
-          <Namespace>MethodImplOptions = System.Runtime.CompilerServices.MethodImplOptions</Namespace>
-        </Import>
-      </Imports>
-      <Code Language="CSharp">struct Vector
-{
-    public long x;
-    public long y;
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Vector(long x, long y) { this.x = x; this.y = y; }
-    public long this[int index]
-    {
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        get { if (index == 0) return x; else return y; }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        set { if (index == 0) x = value; else y = value; }
-    }
-    public long Length =&gt; x * x + y * y;
-    public double SqrtLength =&gt; Math.Sqrt(Length);
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    static public double CrossProduct(Vector a, Vector b) =&gt; a.x * b.y - a.y * b.x;
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    static public double InnerProduct(Vector a, Vector b) =&gt; a.x * b.x + a.y * b.y;
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Vector operator +(Vector a, Vector b) =&gt; new Vector(a.x + b.x, a.y + b.y);
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Vector operator -(Vector a, Vector b) =&gt; new Vector(a.x - b.x, a.y - b.y);
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool operator ==(Vector a, Vector b) =&gt; a.x == b.x &amp;&amp; a.y == b.y;
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool operator !=(Vector a, Vector b) =&gt; a.x != b.x || a.y != b.y;
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public override bool Equals(object obj) =&gt; this == (Vector)obj;
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public override int GetHashCode() =&gt; x.GetHashCode() * 1000000007 + y.GetHashCode();
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public override string ToString() =&gt; $$"({x},{y})";
-}</Code>
-    </Snippet>
-  </CodeSnippet>
-  <CodeSnippet Format="1.0.0">
-    <Header>
       <Title>Line2D</Title>
       <Shortcut>line</Shortcut>
       <Description>線分</Description>
@@ -152,6 +39,70 @@
         return new Vector(a.a.x + ramda * (a.b.x - a.a.x), a.a.y + ramda * (a.b.y - a.a.y));
     }
     public override string ToString() =&gt; $$"{a} {b}";
+}</Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>Vector2D</Title>
+      <Shortcut>vector</Shortcut>
+      <Description>二次元ベクトル</Description>
+      <Author>keymoon</Author>
+    </Header>
+    <Snippet>
+      <Imports>
+        <Import>
+          <Namespace>System</Namespace>
+        </Import>
+        <Import>
+          <Namespace>MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute</Namespace>
+        </Import>
+        <Import>
+          <Namespace>MethodImplOptions = System.Runtime.CompilerServices.MethodImplOptions</Namespace>
+        </Import>
+      </Imports>
+      <Declarations>
+        <Literal>
+          <ID>T</ID>
+          <Default>double</Default>
+          <ToolTip>型</ToolTip>
+        </Literal>
+      </Declarations>
+      <Code Language="CSharp">struct Vector
+{
+    public $T$ x;
+    public $T$ y;
+    public $T$ this[int index]
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        get { if (index == 0) return x; else return y; }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        set { if (index == 0) x = value; else y = value; }
+    }
+    public $T$ Length =&gt; x * x + y * y;
+    public double SqrtLength =&gt; Math.Sqrt(Length);
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public Vector($T$ x, $T$ y) { this.x = x; this.y = y; }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public Vector RotateVector(double radian) =&gt; new Vector(($T$)(x * Math.Cos(radian) - y * Math.Sin(radian)), ($T$)(x * Math.Sin(radian) + y * Math.Cos(radian)));
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    static public $T$ CrossProduct(Vector a, Vector b) =&gt; a.x * b.y - a.y * b.x;
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    static public $T$ InnerProduct(Vector a, Vector b) =&gt; a.x * b.x + a.y * b.y;
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Vector operator +(Vector a, Vector b) =&gt; new Vector(a.x + b.x, a.y + b.y);
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Vector operator -(Vector a, Vector b) =&gt; new Vector(a.x - b.x, a.y - b.y);
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool operator ==(Vector a, Vector b) =&gt; a.x == b.x &amp;&amp; a.y == b.y;
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool operator !=(Vector a, Vector b) =&gt; a.x != b.x || a.y != b.y;
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public override bool Equals(object obj) =&gt; this == (Vector)obj;
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public override int GetHashCode() =&gt; x.GetHashCode() * 1000000007 + y.GetHashCode();
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public override string ToString() =&gt; $$"({x},{y})";
 }</Code>
     </Snippet>
   </CodeSnippet>
