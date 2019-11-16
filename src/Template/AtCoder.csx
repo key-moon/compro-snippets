@@ -10,11 +10,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Numerics;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using static System.Math;
-using MethodImplOptions = System.Runtime.CompilerServices.MethodImplOptions;
-using MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute;
 
 public class P
 {

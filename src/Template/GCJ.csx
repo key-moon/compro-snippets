@@ -9,6 +9,7 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using static System.Math;
@@ -24,8 +25,9 @@ static class P
         for (int i = 1; i <= k; i++) builder.AppendLine($"Case #{i}: {Solve()}");
         Console.WriteLine(builder.ToString());
     }
+
     static string Solve()
     {
-
+        
     }
 }       
