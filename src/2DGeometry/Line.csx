@@ -1,4 +1,4 @@
-﻿#load "FloatVector.csx"
+﻿#load "Vector.csx"
 
 ///Title : Line2D
 ///Shortcut : line
