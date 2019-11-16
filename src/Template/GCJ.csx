@@ -16,9 +16,9 @@ using static System.Math;
 using MethodImplOptions = System.Runtime.CompilerServices.MethodImplOptions;
 using MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute;
 
-static class P
+public static class P
 {
-    static void Main()
+    public static void Main()
     {
         int k = int.Parse(Console.ReadLine());
         StringBuilder builder = new StringBuilder();
