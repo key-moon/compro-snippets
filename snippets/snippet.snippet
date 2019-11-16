@@ -1070,6 +1070,58 @@
   </CodeSnippet>
   <CodeSnippet Format="1.0.0">
     <Header>
+      <Title>Template for AtCoder</Title>
+      <Shortcut>tmplatcoder</Shortcut>
+      <Description>AtCoder用のテンプレート</Description>
+      <Author>keymoon</Author>
+    </Header>
+    <Snippet>
+      <Imports>
+        <Import>
+          <Namespace>System</Namespace>
+        </Import>
+        <Import>
+          <Namespace>System.IO</Namespace>
+        </Import>
+        <Import>
+          <Namespace>System.Linq</Namespace>
+        </Import>
+        <Import>
+          <Namespace>System.Collections</Namespace>
+        </Import>
+        <Import>
+          <Namespace>System.Collections.Generic</Namespace>
+        </Import>
+        <Import>
+          <Namespace>System.Text</Namespace>
+        </Import>
+        <Import>
+          <Namespace>System.Numerics</Namespace>
+        </Import>
+        <Import>
+          <Namespace>System.Diagnostics</Namespace>
+        </Import>
+        <Import>
+          <Namespace>System.Threading.Tasks</Namespace>
+        </Import>
+        <Import>
+          <Namespace>System.Text.RegularExpressions</Namespace>
+        </Import>
+        <Import>
+          <Namespace>static System.Math</Namespace>
+        </Import>
+      </Imports>
+      <Code Language="CSharp">public class P
+{
+    public void Main()
+    {
+        $end$
+    }
+}</Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
       <Title>Template for Google Code Jam</Title>
       <Shortcut>tmplgcj</Shortcut>
       <Description>gcjのアレ</Description>
@@ -1096,6 +1148,9 @@
           <Namespace>System.Text</Namespace>
         </Import>
         <Import>
+          <Namespace>System.Diagnostics</Namespace>
+        </Import>
+        <Import>
           <Namespace>System.Threading.Tasks</Namespace>
         </Import>
         <Import>
@@ -1120,9 +1175,10 @@
         for (int i = 1; i &lt;= k; i++) builder.AppendLine($$"Case #{i}: {Solve()}");
         Console.WriteLine(builder.ToString());
     }
+
     static string Solve()
     {
-
+        $end$
     }
 }</Code>
     </Snippet>
