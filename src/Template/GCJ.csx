@@ -28,6 +28,6 @@ static class P
 
     static string Solve()
     {
-        
+        /*cursor*/
     }
 }       
