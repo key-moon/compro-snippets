@@ -2950,6 +2950,95 @@ static ModInt Factorial(int x)
   </CodeSnippet>
   <CodeSnippet Format="1.0.0">
     <Header>
+      <Title>ReadGraphDirected</Title>
+      <Shortcut>rgd</Shortcut>
+      <Description>有向グラフの読み込み</Description>
+      <Author>keymoon</Author>
+    </Header>
+    <Snippet>
+      <Imports>
+        <Import>
+          <Namespace>System</Namespace>
+        </Import>
+        <Import>
+          <Namespace>System.Linq</Namespace>
+        </Import>
+        <Import>
+          <Namespace>System.Collections.Generic</Namespace>
+        </Import>
+      </Imports>
+      <Declarations>
+        <Literal>
+          <ID>graph</ID>
+          <Default>graph</Default>
+          <ToolTip>変数</ToolTip>
+        </Literal>
+        <Literal>
+          <ID>n</ID>
+          <Default>n</Default>
+          <ToolTip>頂点数</ToolTip>
+        </Literal>
+        <Literal>
+          <ID>m</ID>
+          <Default>m</Default>
+          <ToolTip>辺数</ToolTip>
+        </Literal>
+      </Declarations>
+      <Code Language="CSharp">List&lt;int&gt;[] $graph$ = Enumerable.Repeat(0, $n$).Select(_ =&gt; new List&lt;int&gt;()).ToArray();
+for (int i = 0; i &lt; $m$; i++)
+{
+    var st = Console.ReadLine().Split().Select(x =&gt; int.Parse(x) - 1).ToArray();
+    $graph$[st[0]].Add(st[1]);
+    $graph$[st[1]].Add(st[0]);
+}</Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>ReadGraphUnDirected</Title>
+      <Shortcut>rgud</Shortcut>
+      <Description>無向グラフの読み込み</Description>
+      <Author>keymoon</Author>
+    </Header>
+    <Snippet>
+      <Imports>
+        <Import>
+          <Namespace>System</Namespace>
+        </Import>
+        <Import>
+          <Namespace>System.Linq</Namespace>
+        </Import>
+        <Import>
+          <Namespace>System.Collections.Generic</Namespace>
+        </Import>
+      </Imports>
+      <Declarations>
+        <Literal>
+          <ID>graph</ID>
+          <Default>graph</Default>
+          <ToolTip>変数</ToolTip>
+        </Literal>
+        <Literal>
+          <ID>n</ID>
+          <Default>n</Default>
+          <ToolTip>頂点数</ToolTip>
+        </Literal>
+        <Literal>
+          <ID>m</ID>
+          <Default>m</Default>
+          <ToolTip>辺数</ToolTip>
+        </Literal>
+      </Declarations>
+      <Code Language="CSharp">List&lt;int&gt;[] $graph$ = Enumerable.Repeat(0, $n$).Select(_ =&gt; new List&lt;int&gt;()).ToArray();
+for (int i = 0; i &lt; $m$; i++)
+{
+    var st = Console.ReadLine().Split().Select(x =&gt; int.Parse(x) - 1).ToArray();
+    $graph$[st[0]].Add(st[1]);
+}</Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
       <Title>ReadLineDouble</Title>
       <Shortcut>rldouble</Shortcut>
       <Description>複数行単一データの読み込み(double型)</Description>
@@ -2966,12 +3055,12 @@ static ModInt Factorial(int x)
       </Imports>
       <Declarations>
         <Literal>
-          <ID>height</ID>
-          <Default>h</Default>
+          <ID>n</ID>
+          <Default>n</Default>
           <ToolTip>行数</ToolTip>
         </Literal>
       </Declarations>
-      <Code Language="CSharp">Enumerable.Repeat(0, $height$).Select(_ =&gt; double.Parse(Console.ReadLine())).ToArray()</Code>
+      <Code Language="CSharp">Enumerable.Repeat(0, $n$).Select(_ =&gt; double.Parse(Console.ReadLine())).ToArray()</Code>
     </Snippet>
   </CodeSnippet>
   <CodeSnippet Format="1.0.0">
@@ -2992,12 +3081,12 @@ static ModInt Factorial(int x)
       </Imports>
       <Declarations>
         <Literal>
-          <ID>height</ID>
-          <Default>h</Default>
+          <ID>n</ID>
+          <Default>n</Default>
           <ToolTip>行数</ToolTip>
         </Literal>
       </Declarations>
-      <Code Language="CSharp">Enumerable.Repeat(0, $height$).Select(_ =&gt; int.Parse(Console.ReadLine())).ToArray()</Code>
+      <Code Language="CSharp">Enumerable.Repeat(0, $n$).Select(_ =&gt; int.Parse(Console.ReadLine())).ToArray()</Code>
     </Snippet>
   </CodeSnippet>
   <CodeSnippet Format="1.0.0">
@@ -3018,12 +3107,12 @@ static ModInt Factorial(int x)
       </Imports>
       <Declarations>
         <Literal>
-          <ID>height</ID>
-          <Default>h</Default>
+          <ID>n</ID>
+          <Default>n</Default>
           <ToolTip>行数</ToolTip>
         </Literal>
       </Declarations>
-      <Code Language="CSharp">Enumerable.Repeat(0, $height$).Select(_ =&gt; long.Parse(Console.ReadLine())).ToArray()</Code>
+      <Code Language="CSharp">Enumerable.Repeat(0, $n$).Select(_ =&gt; long.Parse(Console.ReadLine())).ToArray()</Code>
     </Snippet>
   </CodeSnippet>
   <CodeSnippet Format="1.0.0">
@@ -3044,12 +3133,12 @@ static ModInt Factorial(int x)
       </Imports>
       <Declarations>
         <Literal>
-          <ID>height</ID>
-          <Default>h</Default>
+          <ID>n</ID>
+          <Default>n</Default>
           <ToolTip>行数</ToolTip>
         </Literal>
       </Declarations>
-      <Code Language="CSharp">Enumerable.Repeat(0, $height$).Select(_ =&gt; Console.ReadLine()).ToArray()</Code>
+      <Code Language="CSharp">Enumerable.Repeat(0, $n$).Select(_ =&gt; Console.ReadLine()).ToArray()</Code>
     </Snippet>
   </CodeSnippet>
   <CodeSnippet Format="1.0.0">
@@ -3070,12 +3159,12 @@ static ModInt Factorial(int x)
       </Imports>
       <Declarations>
         <Literal>
-          <ID>height</ID>
-          <Default>h</Default>
+          <ID>n</ID>
+          <Default>n</Default>
           <ToolTip>行数</ToolTip>
         </Literal>
       </Declarations>
-      <Code Language="CSharp">Enumerable.Repeat(0, $height$).Select(_ =&gt; Console.ReadLine().Split().Select(double.Parse).ToArray()).ToArray()</Code>
+      <Code Language="CSharp">Enumerable.Repeat(0, $n$).Select(_ =&gt; Console.ReadLine().Split().Select(double.Parse).ToArray()).ToArray()</Code>
     </Snippet>
   </CodeSnippet>
   <CodeSnippet Format="1.0.0">
@@ -3096,12 +3185,12 @@ static ModInt Factorial(int x)
       </Imports>
       <Declarations>
         <Literal>
-          <ID>height</ID>
-          <Default>h</Default>
+          <ID>n</ID>
+          <Default>n</Default>
           <ToolTip>行数</ToolTip>
         </Literal>
       </Declarations>
-      <Code Language="CSharp">Enumerable.Repeat(0, $height$).Select(_ =&gt; Console.ReadLine().Split().Select(int.Parse).ToArray()).ToArray()</Code>
+      <Code Language="CSharp">Enumerable.Repeat(0, $n$).Select(_ =&gt; Console.ReadLine().Split().Select(int.Parse).ToArray()).ToArray()</Code>
     </Snippet>
   </CodeSnippet>
   <CodeSnippet Format="1.0.0">
@@ -3122,12 +3211,12 @@ static ModInt Factorial(int x)
       </Imports>
       <Declarations>
         <Literal>
-          <ID>height</ID>
-          <Default>h</Default>
+          <ID>n</ID>
+          <Default>n</Default>
           <ToolTip>行数</ToolTip>
         </Literal>
       </Declarations>
-      <Code Language="CSharp">Enumerable.Repeat(0, $height$).Select(_ =&gt; Console.ReadLine().Split().Select(long.Parse).ToArray()).ToArray()</Code>
+      <Code Language="CSharp">Enumerable.Repeat(0, $n$).Select(_ =&gt; Console.ReadLine().Split().Select(long.Parse).ToArray()).ToArray()</Code>
     </Snippet>
   </CodeSnippet>
   <CodeSnippet Format="1.0.0">
@@ -3148,12 +3237,12 @@ static ModInt Factorial(int x)
       </Imports>
       <Declarations>
         <Literal>
-          <ID>height</ID>
-          <Default>h</Default>
+          <ID>n</ID>
+          <Default>n</Default>
           <ToolTip>行数</ToolTip>
         </Literal>
       </Declarations>
-      <Code Language="CSharp">Enumerable.Repeat(0, $height$).Select(_ =&gt; Console.ReadLine().Split()).ToArray()</Code>
+      <Code Language="CSharp">Enumerable.Repeat(0, $n$).Select(_ =&gt; Console.ReadLine().Split()).ToArray()</Code>
     </Snippet>
   </CodeSnippet>
   <CodeSnippet Format="1.0.0">
