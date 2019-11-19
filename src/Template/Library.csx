@@ -6,13 +6,13 @@
 #if !DECLARATIONS
 /*
 //スニペット名
-@title = title
+@title = title;
 //ショートカット
-@shortcut = shortcut
+@shortcut = shortcut;
 //説明
-@description = description
+@description = description;
 //作者
-@author = keymoon
+@author = keymoon;
 */
 #endif
 

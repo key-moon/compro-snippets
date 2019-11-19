@@ -9,7 +9,7 @@ using MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute;
 #if !DECLARATIONS
 /*
 //型
-@T = uint
+@T = uint;
 */
 using @T = System.UInt32;
 #endif

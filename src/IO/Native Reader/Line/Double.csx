@@ -7,13 +7,9 @@ using System;
 using System.Linq;
 
 #if !DECLARATIONS
-/*
 //行数
-height = h
-*/
-int height;
-
+int @n;
 #endif
 
 
-Enumerable.Repeat(0, height).Select(_ => double.Parse(Console.ReadLine())).ToArray()
+Enumerable.Repeat(0, @n).Select(_ => double.Parse(Console.ReadLine())).ToArray()

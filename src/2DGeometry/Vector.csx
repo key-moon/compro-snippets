@@ -10,7 +10,7 @@ using MethodImplOptions = System.Runtime.CompilerServices.MethodImplOptions;
 #if !DECLARATIONS
 /*
 //型
-@T = double
+@T = double;
 */
 using @T = System.Double;
 #endif

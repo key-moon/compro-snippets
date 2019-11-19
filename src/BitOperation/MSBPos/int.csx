@@ -9,7 +9,7 @@ using MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute;
 #if !DECLARATIONS
 /*
 //型
-@T = int
+@T = int;
 */
 using @T = System.Int32;
 #endif

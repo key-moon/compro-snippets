@@ -11,8 +11,8 @@ using MethodImplOptions = System.Runtime.CompilerServices.MethodImplOptions;
 #if !DECLARATIONS
 /*
 //型
-@T = int
-Name = Int
+@T = int;
+Name = Int;
 */
 using @T = System.Int32;
 #endif

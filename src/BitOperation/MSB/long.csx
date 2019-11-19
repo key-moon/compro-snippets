@@ -9,7 +9,7 @@ using MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute;
 #if !DECLARATIONS
 /*
 //型
-@T = long
+@T = long;
 */
 using @T = System.Int64;
 #endif
