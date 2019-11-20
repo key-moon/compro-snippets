@@ -1227,6 +1227,72 @@ using System;
   </CodeSnippet>
   <CodeSnippet Format="1.0.0">
     <Header>
+      <Title>Permutations(duplicated elements)</Title>
+      <Shortcut>permsd</Shortcut>
+      <Description>重複あり配列要素の並び替えを生成</Description>
+      <Author>keymoon</Author>
+    </Header>
+    <Snippet>
+      <Imports>
+        <Import>
+          <Namespace>System</Namespace>
+        </Import>
+        <Import>
+          <Namespace>System.Collections.Generic</Namespace>
+        </Import>
+      </Imports>
+      <Code Language="CSharp">static IEnumerable&lt;T[]&gt; Permutations&lt;T&gt;(T[] array) where T : IComparable&lt;T&gt;
+{
+    int index = 0;
+    yield return array;
+    while (true)
+    {
+        for (int i = array.Length - 1; i &gt; 0; i--)
+        {
+            if (array[i - 1].CompareTo(array[i]) &gt;= 0) continue;
+            int j = Array.FindLastIndex(array, x =&gt; array[i - 1].CompareTo(x) &lt; 0);
+            T tmp = array[i - 1]; array[i - 1] = array[j]; array[j] = tmp;
+            Array.Reverse(array, i, array.Length - i);
+            yield return array;
+            goto end;
+        }
+        Array.Reverse(array, index, array.Length);
+        yield break;
+    end:;
+    }
+}</Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>Permutations(non-duplicated elements)</Title>
+      <Shortcut>permsnd</Shortcut>
+      <Description>重複なし配列要素の並び替えを生成(Johnson–Trotter algorithm)</Description>
+      <Author>keymoon</Author>
+    </Header>
+    <Snippet>
+      <Imports>
+        <Import>
+          <Namespace>System.Collections.Generic</Namespace>
+        </Import>
+      </Imports>
+      <Code Language="CSharp">static IEnumerable&lt;T[]&gt; Permutations&lt;T&gt;(T[] array)
+{
+    long total = 1;
+    for (int i = 2; i &lt; array.Length; i++) total *= i;
+    for (total &gt;&gt;= 1; total &gt;= 1; total -= 1)
+    {
+        for (int j = 0; j &lt; array.Length - 1; j++)  { yield return array;  Swap(ref array[j], ref array[j + 1]); }
+        yield return array; Swap(ref array[0], ref array[1]);
+        for (int j = array.Length - 2; j &gt;= 0; j--)  { yield return array; Swap(ref array[j], ref array[j + 1]); }
+        yield return array; Swap(ref array[array.Length - 1], ref array[array.Length - 2]);
+    }
+}
+static void Swap&lt;T&gt;(ref T a, ref T b) { T tmp = a; a = b; b = tmp; }</Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
       <Title>Rolling Hash</Title>
       <Shortcut>rollinghash</Shortcut>
       <Description>固定modローリングハッシュ</Description>
