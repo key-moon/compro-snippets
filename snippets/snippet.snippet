@@ -1070,6 +1070,51 @@
   </CodeSnippet>
   <CodeSnippet Format="1.0.0">
     <Header>
+      <Title>Grid Graph Edges Generator</Title>
+      <Shortcut>gridedges</Shortcut>
+      <Description>グリッドグラフの辺を生成する</Description>
+      <Author>keymoon</Author>
+    </Header>
+    <Snippet>
+      <Imports>
+        <Import>
+          <Namespace>System</Namespace>
+        </Import>
+        <Import>
+          <Namespace>System.Linq</Namespace>
+        </Import>
+        <Import>
+          <Namespace>System.Collections.Generic</Namespace>
+        </Import>
+      </Imports>
+      <Declarations>
+        <Literal>
+          <ID>graph</ID>
+          <Default>graph</Default>
+          <ToolTip>変数</ToolTip>
+        </Literal>
+        <Literal>
+          <ID>h</ID>
+          <Default>h</Default>
+          <ToolTip>高さ</ToolTip>
+        </Literal>
+        <Literal>
+          <ID>w</ID>
+          <Default>w</Default>
+          <ToolTip>横幅</ToolTip>
+        </Literal>
+      </Declarations>
+      <Code Language="CSharp">List&lt;int&gt;[] $graph$ = Enumerable.Repeat(0, $h$ * $w$).Select(_ =&gt; new List&lt;int&gt;()).ToArray();
+for (int i = 0; i &lt; $h$ - 1; i++)
+    for (int j = 0; j &lt; $w$; j++)
+    { var id = i * $w$ + j; graph[id].Add(id + $w$); graph[id + $w$].Add(id); }
+for (int i = 0; i &lt; $h$; i++)
+    for (int j = 0; j &lt; $w$ - 1; j++)
+    { var id = i * $w$ + j; graph[id].Add(id + 1); graph[id + 1].Add(id); }</Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
       <Title>Template for AtCoder</Title>
       <Shortcut>tmplatcoder</Shortcut>
       <Description>AtCoder用のテンプレート</Description>
@@ -2763,6 +2808,116 @@ public int Select(int k, int kind)
     }
     return place;
 }</Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>WriteLine(Multi Line)</Title>
+      <Shortcut>cwl</Shortcut>
+      <Description>複数行に出力</Description>
+      <Author>keymoon</Author>
+    </Header>
+    <Snippet>
+      <Imports>
+        <Import>
+          <Namespace>System</Namespace>
+        </Import>
+      </Imports>
+      <Declarations>
+        <Literal>
+          <ID>collection</ID>
+          <Default>collection</Default>
+          <ToolTip>条件</ToolTip>
+        </Literal>
+      </Declarations>
+      <Code Language="CSharp">Console.WriteLine(string.Join("\n", $collection$));</Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>WriteLine(Multi Line/Splitted)</Title>
+      <Shortcut>cwls</Shortcut>
+      <Description>空白区切りで複数行に出力</Description>
+      <Author>keymoon</Author>
+    </Header>
+    <Snippet>
+      <Imports>
+        <Import>
+          <Namespace>System</Namespace>
+        </Import>
+        <Import>
+          <Namespace>System.Linq</Namespace>
+        </Import>
+      </Imports>
+      <Declarations>
+        <Literal>
+          <ID>collection</ID>
+          <Default>collection</Default>
+          <ToolTip>条件</ToolTip>
+        </Literal>
+      </Declarations>
+      <Code Language="CSharp">Console.WriteLine(string.Join("\n", $collection$.Select(x =&gt; string.Join(" ", x))));</Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>WriteLine(Splitted)</Title>
+      <Shortcut>cws</Shortcut>
+      <Description>空白区切りで出力</Description>
+      <Author>keymoon</Author>
+    </Header>
+    <Snippet>
+      <Imports>
+        <Import>
+          <Namespace>System</Namespace>
+        </Import>
+      </Imports>
+      <Declarations>
+        <Literal>
+          <ID>collection</ID>
+          <Default>collection</Default>
+          <ToolTip>条件</ToolTip>
+        </Literal>
+        <Literal>
+          <ID>separator</ID>
+          <Default>" "</Default>
+          <ToolTip>区切り文字</ToolTip>
+        </Literal>
+      </Declarations>
+      <Code Language="CSharp">Console.WriteLine(string.Join($separator$, $collection$));</Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>WriteLine(Yes/No)</Title>
+      <Shortcut>cwyn</Shortcut>
+      <Description>Yes/Noを出力</Description>
+      <Author>keymoon</Author>
+    </Header>
+    <Snippet>
+      <Imports>
+        <Import>
+          <Namespace>System</Namespace>
+        </Import>
+      </Imports>
+      <Declarations>
+        <Literal>
+          <ID>cond</ID>
+          <Default>cond</Default>
+          <ToolTip>条件</ToolTip>
+        </Literal>
+        <Literal>
+          <ID>yes</ID>
+          <Default>"Yes"</Default>
+          <ToolTip>yes</ToolTip>
+        </Literal>
+        <Literal>
+          <ID>no</ID>
+          <Default>"No"</Default>
+          <ToolTip>no</ToolTip>
+        </Literal>
+      </Declarations>
+      <Code Language="CSharp">Console.WriteLine($cond$ ? $yes$ : $no$);</Code>
     </Snippet>
   </CodeSnippet>
   <CodeSnippet Format="1.0.0">
