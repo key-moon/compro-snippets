@@ -1115,6 +1115,71 @@ for (int i = 0; i &lt; $h$; i++)
   </CodeSnippet>
   <CodeSnippet Format="1.0.0">
     <Header>
+      <Title>Random Number Generator</Title>
+      <Shortcut>rng</Shortcut>
+      <Description>Xorshiftを用いた乱数生成器</Description>
+      <Author>keymoon</Author>
+    </Header>
+    <Snippet>
+      <Imports>
+        <Import>
+          <Namespace>System</Namespace>
+        </Import>
+        <Import>
+          <Namespace>System.Runtime.InteropServices</Namespace>
+        </Import>
+      </Imports>
+      <Code Language="CSharp">[StructLayout(LayoutKind.Explicit)]
+class Random
+{
+    [FieldOffset(0)]
+    private byte __byte;
+    [FieldOffset(0)]
+    private sbyte __sbyte;
+    [FieldOffset(0)]
+    private char __char;
+    [FieldOffset(0)]
+    private short __short;
+    [FieldOffset(0)]
+    private ushort __ushort;
+    [FieldOffset(0)]
+    private int __int;
+    [FieldOffset(0)]
+    private uint __uint;
+    [FieldOffset(0)]
+    private long __long;
+    [FieldOffset(0)]
+    private ulong __ulong;
+
+    public byte Byte { get { Update(); return __byte; } }
+    public sbyte SByte { get { Update(); return __sbyte; } }
+    public char Char { get { Update(); return __char; } }
+    public short Short { get { Update(); return __short; } }
+    public ushort UShort { get { Update(); return __ushort; } }
+    public int Int { get { Update(); return __int; } }
+    public uint UInt { get { Update(); return __uint; } }
+    public long Long { get { Update(); return __long; } }
+    public ulong ULong { get { Update(); return __ulong; } }
+    public double Double { get { return (double)ULong / ulong.MaxValue; } }
+
+    [FieldOffset(0)]
+    private ulong _xorshift;
+
+    public Random() : this((ulong)DateTime.Now.Ticks) { }
+    public Random(ulong seed) { SetSeed(seed); }
+    public void SetSeed(ulong seed) =&gt; _xorshift = seed * 0x3141592c0ffeeul;
+
+    public int Next() =&gt; Int &amp; 2147483647;
+    public void Update()
+    {
+        _xorshift ^= _xorshift &lt;&lt; 7;
+        _xorshift ^= _xorshift &gt;&gt; 9;
+    }
+}</Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
       <Title>Template for AtCoder</Title>
       <Shortcut>tmplatcoder</Shortcut>
       <Description>AtCoder用のテンプレート</Description>
@@ -2827,7 +2892,7 @@ public int Select(int k, int kind)
         <Literal>
           <ID>collection</ID>
           <Default>collection</Default>
-          <ToolTip>条件</ToolTip>
+          <ToolTip>コレクション</ToolTip>
         </Literal>
       </Declarations>
       <Code Language="CSharp">Console.WriteLine(string.Join("\n", $collection$));</Code>
@@ -2853,7 +2918,7 @@ public int Select(int k, int kind)
         <Literal>
           <ID>collection</ID>
           <Default>collection</Default>
-          <ToolTip>条件</ToolTip>
+          <ToolTip>コレクション</ToolTip>
         </Literal>
       </Declarations>
       <Code Language="CSharp">Console.WriteLine(string.Join("\n", $collection$.Select(x =&gt; string.Join(" ", x))));</Code>
@@ -2876,7 +2941,7 @@ public int Select(int k, int kind)
         <Literal>
           <ID>collection</ID>
           <Default>collection</Default>
-          <ToolTip>条件</ToolTip>
+          <ToolTip>コレクション</ToolTip>
         </Literal>
         <Literal>
           <ID>separator</ID>
