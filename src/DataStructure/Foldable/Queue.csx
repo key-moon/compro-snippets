@@ -36,7 +36,7 @@ class FoldableQueue<T>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Pop()
     {
-        ValidateNotEmpty();
+        Validate();
         if (TailValueStack.Count == 0) Move();
         TailValueStack.Pop();
         Count--;
@@ -60,5 +60,5 @@ class FoldableQueue<T>
         FrontIsEmpty = true;
     }
 
-    private void ValidateNotEmpty() { if (Count == 0) throw new Exception(); }
+    private void Validate() { if (Count == 0) throw new Exception(); }
 }
