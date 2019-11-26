@@ -1679,8 +1679,8 @@ static int PopCount($T$ n)
   </CodeSnippet>
   <CodeSnippet Format="1.0.0">
     <Header>
-      <Title>AggregationQueue</Title>
-      <Shortcut>aqueue</Shortcut>
+      <Title>FoldableDeque</Title>
+      <Shortcut>fdeque</Shortcut>
       <Description>Sliding-Window Aggregationが可能なQueue</Description>
       <Author>keymoon</Author>
     </Header>
@@ -1699,7 +1699,145 @@ static int PopCount($T$ n)
           <Namespace>MethodImplOptions = System.Runtime.CompilerServices.MethodImplOptions</Namespace>
         </Import>
       </Imports>
-      <Code Language="CSharp">class AggregationQueue&lt;T&gt;
+      <Code Language="CSharp">class FoldableDeque&lt;T&gt;
+{
+    public int Count { get; private set; }
+    T[] data; int FrontInd, BackInd;
+    Stack&lt;T&gt; FrontValues = new Stack&lt;T&gt;();
+    Stack&lt;T&gt; BackValues = new Stack&lt;T&gt;();
+    Func&lt;T, T, T&gt; Merge;
+
+    public T Value
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        get
+        {
+            return
+                FrontValues.Count == 0 ? BackValues.Peek() :
+                BackValues.Count == 0 ? FrontValues.Peek() :
+                Merge(FrontValues.Peek(), BackValues.Peek());
+        }
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public FoldableDeque(Func&lt;T, T, T&gt; merge)
+    {
+        data = new T[1 &lt;&lt; 16];
+        FrontInd = 0;
+        BackInd = data.Length - 1;
+        Count = 0;
+        Merge = merge;
+    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void PushFront(T item)
+    {
+        if (Count == data.Length) Extend(data.Length &lt;&lt; 1);
+        data[FrontInd = (FrontInd - 1) &amp; data.Length - 1] = item; Count++;
+        FrontValues.Push(FrontValues.Count == 0 ? item : Merge(item, FrontValues.Peek()));
+    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void PushBack(T item)
+    {
+        if (Count == data.Length) Extend(data.Length &lt;&lt; 1);
+        data[BackInd = (BackInd + 1) &amp; data.Length - 1] = item; Count++;
+        BackValues.Push(BackValues.Count == 0 ? item : Merge(BackValues.Peek(), item));
+    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void PopFront()
+    {
+        Validate();
+        FrontInd = (FrontInd + 1) &amp; data.Length - 1; Count--;
+        if (FrontValues.Count == 0) Reconstruct();
+        else FrontValues.Pop();
+    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void PopBack()
+    {
+        Validate();
+        BackInd = (BackInd - 1) &amp; data.Length - 1; Count--;
+        if (BackValues.Count == 0) Reconstruct();
+        else BackValues.Pop();
+    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private void Reconstruct()
+    {
+        int ind;
+        FrontValues = new Stack&lt;T&gt;();
+        BackValues = new Stack&lt;T&gt;();
+        if (Count == 0) return;
+        ind = (FrontInd + (Count &gt;&gt; 1)) &amp; data.Length - 1;
+        BackValues.Push(data[ind]);
+        if (ind &lt;= BackInd)
+        {
+            for (ind++; ind &lt;= BackInd; ind++)
+                BackValues.Push(Merge(BackValues.Peek(), data[ind]));
+        }
+        else
+        {
+            for (ind++; ind &lt; data.Length; ind++)
+                BackValues.Push(Merge(BackValues.Peek(), data[ind]));
+            for (ind = 0; ind &lt;= BackInd; ind++)
+                BackValues.Push(Merge(BackValues.Peek(), data[ind]));
+        }
+        if (Count == 1) return;
+        ind = (FrontInd + (Count &gt;&gt; 1) - 1) &amp; data.Length - 1;
+        FrontValues.Push(data[ind]);
+        if (FrontInd &lt;= ind)
+        {
+            for (ind--; FrontInd &lt;= ind; ind--)
+                FrontValues.Push(Merge(data[ind], FrontValues.Peek()));
+        }
+        else
+        {
+            for (ind--; 0 &lt;= ind; ind--)
+                FrontValues.Push(Merge(data[ind], FrontValues.Peek()));
+            for (ind = data.Length - 1; FrontInd &lt;= ind; ind--)
+                FrontValues.Push(Merge(data[ind], FrontValues.Peek()));
+        }
+    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private void Extend(int newSize)
+    {
+        T[] newData = new T[newSize];
+        if (0 &lt; Count)
+        {
+            if (FrontInd &lt;= BackInd) Array.Copy(data, FrontInd, newData, 0, Count);
+            else
+            {
+                Array.Copy(data, FrontInd, newData, 0, data.Length - FrontInd);
+                Array.Copy(data, 0, newData, data.Length - FrontInd, BackInd + 1);
+            }
+        }
+        data = newData; FrontInd = 0; BackInd = Count - 1;
+    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private void Validate() { if (Count == 0) throw new Exception(); }
+}</Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>FoldableQueue</Title>
+      <Shortcut>fqueue</Shortcut>
+      <Description>要素のfoldが可能なQueue</Description>
+      <Author>keymoon</Author>
+    </Header>
+    <Snippet>
+      <Imports>
+        <Import>
+          <Namespace>System</Namespace>
+        </Import>
+        <Import>
+          <Namespace>System.Collections.Generic</Namespace>
+        </Import>
+        <Import>
+          <Namespace>MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute</Namespace>
+        </Import>
+        <Import>
+          <Namespace>MethodImplOptions = System.Runtime.CompilerServices.MethodImplOptions</Namespace>
+        </Import>
+      </Imports>
+      <Code Language="CSharp">class FoldableQueue&lt;T&gt;
 {
     public int Count { get; private set; }
     public T Value
@@ -1722,12 +1860,12 @@ static int PopCount($T$ n)
     Func&lt;T, T, T&gt; Merge;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public AggregationQueue(Func&lt;T, T, T&gt; merge) { Merge = merge; }
+    public FoldableQueue(Func&lt;T, T, T&gt; merge) { Merge = merge; }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Pop()
     {
-        ValidateNotEmpty();
+        Validate();
         if (TailValueStack.Count == 0) Move();
         TailValueStack.Pop();
         Count--;
@@ -1751,7 +1889,7 @@ static int PopCount($T$ n)
         FrontIsEmpty = true;
     }
 
-    private void ValidateNotEmpty() { if (Count == 0) throw new Exception(); }
+    private void Validate() { if (Count == 0) throw new Exception(); }
 }</Code>
     </Snippet>
   </CodeSnippet>
