@@ -1,6 +1,6 @@
-﻿///Title : AggregationQueue
-///Shortcut : aqueue
-///Description : Sliding-Window Aggregationが可能なQueue
+﻿///Title : FoldableQueue
+///Shortcut : fqueue
+///Description : 要素のfoldが可能なQueue
 ///Author : keymoon
 
 using System;
@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute;
 using MethodImplOptions = System.Runtime.CompilerServices.MethodImplOptions;
 
-class AggregationQueue<T>
+class FoldableQueue<T>
 {
     public int Count { get; private set; }
     public T Value
@@ -31,7 +31,7 @@ class AggregationQueue<T>
     Func<T, T, T> Merge;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public AggregationQueue(Func<T, T, T> merge) { Merge = merge; }
+    public FoldableQueue(Func<T, T, T> merge) { Merge = merge; }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Pop()
