@@ -1070,6 +1070,29 @@
   </CodeSnippet>
   <CodeSnippet Format="1.0.0">
     <Header>
+      <Title>AbortFunc</Title>
+      <Shortcut>abortfun</Shortcut>
+      <Description>messageを出力してプログラムを終了する</Description>
+      <Author>keymoon</Author>
+    </Header>
+    <Snippet>
+      <Imports>
+        <Import>
+          <Namespace>System</Namespace>
+        </Import>
+      </Imports>
+      <Declarations>
+        <Literal>
+          <ID>message</ID>
+          <Default>"No"</Default>
+          <ToolTip>出力するメッセージ</ToolTip>
+        </Literal>
+      </Declarations>
+      <Code Language="CSharp">Action abort = () =&gt; { Console.WriteLine($message$); Environment.Exit(0); };</Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
       <Title>Grid Graph Edges Generator</Title>
       <Shortcut>gridedges</Shortcut>
       <Description>グリッドグラフの辺を生成する</Description>
@@ -1762,8 +1785,8 @@ static int PopCount($T$ n)
     private void Reconstruct()
     {
         int ind;
-        FrontValues = new Stack&lt;T&gt;();
-        BackValues = new Stack&lt;T&gt;();
+        FrontValues.Clear();
+        BackValues.Clear();
         if (Count == 0) return;
         ind = (FrontInd + (Count &gt;&gt; 1)) &amp; data.Length - 1;
         BackValues.Push(data[ind]);
@@ -2063,6 +2086,82 @@ static int PopCount($T$ n)
   </CodeSnippet>
   <CodeSnippet Format="1.0.0">
     <Header>
+      <Title>SegmentTree(Point Update/Range Query)</Title>
+      <Shortcut>segtreepr</Shortcut>
+      <Description>一点更新区間取得</Description>
+      <Author>keymoon</Author>
+    </Header>
+    <Snippet>
+      <Imports>
+        <Import>
+          <Namespace>System</Namespace>
+        </Import>
+        <Import>
+          <Namespace>MethodImplOptions = System.Runtime.CompilerServices.MethodImplOptions</Namespace>
+        </Import>
+        <Import>
+          <Namespace>MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute</Namespace>
+        </Import>
+      </Imports>
+      <Code Language="CSharp">class SegmentTree&lt;T&gt;
+{
+    public int Size { get; private set; }
+    T Identity;
+    T[] Data;
+    Func&lt;T, T, T&gt; Merge;
+    int LeafCount;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public SegmentTree(int size, T identity, Func&lt;T, T, T&gt; merge)
+    {
+        Init(size, identity, merge);
+        for (int i = 1; i &lt; Data.Length; i++) Data[i] = identity;
+    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public SegmentTree(T[] elems, T identity, Func&lt;T, T, T&gt; merge)
+    {
+        Init(elems.Length, identity, merge);
+        elems.CopyTo(Data, LeafCount);
+        for (int i = elems.Length + LeafCount; i &lt; Data.Length; i++) Data[i] = identity;
+        for (int i = LeafCount - 1; i &gt;= 1; i--) Data[i] = Merge(Data[i &lt;&lt; 1], Data[(i &lt;&lt; 1) | 1]);
+    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private void Init(int size, T identity, Func&lt;T, T, T&gt; merge)
+    {
+        Size = size;
+        Identity = identity;
+        Merge = merge;
+        LeafCount = 1;
+        while (LeafCount &lt; size) LeafCount &lt;&lt;= 1;
+        Data = new T[LeafCount &lt;&lt; 1];
+    }
+
+    public T this[int index]
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        get { return Data[LeafCount + index]; }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        set { Update(index, value); }
+    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void Update(int i, T x) { Data[i += LeafCount] = x; while (0 &lt; (i &gt;&gt;= 1)) Data[i] = Merge(Data[i &lt;&lt; 1], Data[(i &lt;&lt; 1) | 1]); }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void Operate(int i, T x) { Data[i += LeafCount] = Merge(Data[i], x); while (0 &lt; (i &gt;&gt;= 1)) Data[i] = Merge(Data[i &lt;&lt; 1], Data[(i &lt;&lt; 1) | 1]); }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public T Query(int l, int r)
+    {
+        T lRes = Identity, rRes = Identity;
+        for (l += LeafCount, r += LeafCount; l &lt;= r; l = (l + 1) &gt;&gt; 1, r = (r - 1) &gt;&gt; 1 )
+        {
+            if ((l &amp; 1) == 1) lRes = Merge(lRes, Data[l]); if ((r &amp; 1) == 0) rRes = Merge(Data[r], rRes);
+        }
+        return Merge(lRes, rRes);
+    }
+}</Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
       <Title>SegmentTree(Range Update/Point Query, Commutative operation)</Title>
       <Shortcut>segtreerpc</Shortcut>
       <Description>区間更新一点取得(可換作用)</Description>
@@ -2218,9 +2317,9 @@ static int PopCount($T$ n)
   </CodeSnippet>
   <CodeSnippet Format="1.0.0">
     <Header>
-      <Title>SegmentTree(Point Update/Range Query)</Title>
-      <Shortcut>segtreepr</Shortcut>
-      <Description>一点更新区間取得</Description>
+      <Title>SegmentTree(Range Update/Range Query, Commutative operation)</Title>
+      <Shortcut>segtreerrc</Shortcut>
+      <Description>区間更新区間取得(可換作用)</Description>
       <Author>keymoon</Author>
     </Header>
     <Snippet>
@@ -2235,59 +2334,118 @@ static int PopCount($T$ n)
           <Namespace>MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute</Namespace>
         </Import>
       </Imports>
-      <Code Language="CSharp">class SegmentTree&lt;T&gt;
+      <Code Language="CSharp">class SegmentTree&lt;DataT, OperatorT&gt;
 {
-    public int Size { get; private set; }
-    T Identity;
-    T[] Data;
-    Func&lt;T, T, T&gt; Merge;
+    public readonly int Size;
+    DataT DataIdentity;
+    OperatorT OperatorIdentity;
+    Func&lt;DataT, DataT, DataT&gt; MergeData;
+    Func&lt;OperatorT, OperatorT, OperatorT&gt; MergeOperator;
+    Func&lt;DataT, OperatorT, DataT&gt; Operate;
     int LeafCount;
-
+    int Height;
+    DataT[] Data;
+    OperatorT[] Operators;
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public SegmentTree(int size, T identity, Func&lt;T, T, T&gt; merge)
-    {
-        Init(size, identity, merge);
-        for (int i = 1; i &lt; Data.Length; i++) Data[i] = identity;
-    }
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public SegmentTree(T[] elems, T identity, Func&lt;T, T, T&gt; merge)
-    {
-        Init(elems.Length, identity, merge);
-        elems.CopyTo(Data, LeafCount);
-        for (int i = elems.Length + LeafCount; i &lt; Data.Length; i++) Data[i] = identity;
-        for (int i = LeafCount - 1; i &gt;= 1; i--) Data[i] = Merge(Data[i &lt;&lt; 1], Data[(i &lt;&lt; 1) | 1]);
-    }
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private void Init(int size, T identity, Func&lt;T, T, T&gt; merge)
+    public SegmentTree(int size, DataT dataIdentity, OperatorT operatorIdentity, Func&lt;DataT, DataT, DataT&gt; mergeData, Func&lt;OperatorT, OperatorT, OperatorT&gt; mergeOpeator, Func&lt;DataT, OperatorT, DataT&gt; operate)
+        : this(dataIdentity, operatorIdentity, mergeData, mergeOpeator, operate)
     {
         Size = size;
-        Identity = identity;
-        Merge = merge;
+        Build();
+        for (int i = 0; i &lt; Data.Length; i++) Data[i] = DataIdentity;
+    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public SegmentTree(DataT[] data, DataT dataIdentity, OperatorT operatorIdentity, Func&lt;DataT, DataT, DataT&gt; mergeData, Func&lt;OperatorT, OperatorT, OperatorT&gt; mergeOpeator, Func&lt;DataT, OperatorT, DataT&gt; operate)
+        : this(dataIdentity, operatorIdentity, mergeData, mergeOpeator, operate)
+    {
+        Size = data.Length;
+        Build();
+        for (int i = 0; i &lt; data.Length; i++) Data[i + LeafCount] = data[i];
+        for (int i = data.Length + LeafCount; i &lt; Data.Length; i++) Data[i] = dataIdentity;
+        for (int i = LeafCount - 1; i &gt;= 0; i--) Data[i] = MergeData(Data[i &lt;&lt; 1], Data[(i &lt;&lt; 1) + 1]);
+    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private SegmentTree(DataT dataIdentity, OperatorT operatorIdentity, Func&lt;DataT, DataT, DataT&gt; mergeData, Func&lt;OperatorT, OperatorT, OperatorT&gt; mergeOpeator, Func&lt;DataT, OperatorT, DataT&gt; operate)
+    {
+        DataIdentity = dataIdentity;
+        OperatorIdentity = operatorIdentity;
+        MergeData = mergeData;
+        MergeOperator = mergeOpeator;
+        Operate = operate;
+    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private void Build()
+    {
+        Height = 1;
         LeafCount = 1;
-        while (LeafCount &lt; size) LeafCount &lt;&lt;= 1;
-        Data = new T[LeafCount &lt;&lt; 1];
+        while (LeafCount &lt; Size) { Height++; LeafCount &lt;&lt;= 1; }
+        Operators = new OperatorT[LeafCount &lt;&lt; 1];
+        for (int i = 0; i &lt; Operators.Length; i++) Operators[i] = OperatorIdentity;
+        Data = new DataT[LeafCount &lt;&lt; 1];
     }
-
-    public T this[int index]
+    public DataT this[int index]
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        get { return Data[LeafCount + index]; }
+        get { Propagate(index + LeafCount); return Reflect(index); }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        set { Update(index, value); }
+        set { Propagate(index += LeafCount); Data[index] = value; Operators[index] = OperatorIdentity; Calculate(index, index); }
     }
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Update(int i, T x) { Data[i += LeafCount] = x; while (0 &lt; (i &gt;&gt;= 1)) Data[i] = Merge(Data[i &lt;&lt; 1], Data[(i &lt;&lt; 1) | 1]); }
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Operate(int i, T x) { Data[i += LeafCount] = Merge(Data[i], x); while (0 &lt; (i &gt;&gt;= 1)) Data[i] = Merge(Data[i &lt;&lt; 1], Data[(i &lt;&lt; 1) | 1]); }
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public T Query(int l, int r)
+    public void Update(int l, int r, OperatorT x)
     {
-        T lRes = Identity, rRes = Identity;
-        for (l += LeafCount, r += LeafCount; l &lt;= r; l = (l + 1) &gt;&gt; 1, r = (r - 1) &gt;&gt; 1 )
+        l += LeafCount;
+        r += LeafCount;
+        int origL = l, origR = r;
+        while (l &lt;= r)
         {
-            if ((l &amp; 1) == 1) lRes = Merge(lRes, Data[l]); if ((r &amp; 1) == 0) rRes = Merge(Data[r], rRes);
+            if ((l &amp; 1) == 1) Operators[l] = MergeOperator(Operators[l], x);
+            if ((r &amp; 1) == 0) Operators[r] = MergeOperator(Operators[r], x);
+            l = (l + 1) &gt;&gt; 1; r = (r - 1) &gt;&gt; 1;
         }
-        return Merge(lRes, rRes);
+        Calculate(origL, origR);
+    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public DataT Query(int l, int r)
+    {
+        l += LeafCount;
+        r += LeafCount;
+        DataT lRes = DataIdentity, rRes = DataIdentity;
+        Propagate(l, r);
+        while (l &lt;= r)
+        {
+            if ((l &amp; 1) == 1) lRes = MergeData(lRes, Reflect(l));
+            if ((r &amp; 1) == 0) rRes = MergeData(Reflect(r), rRes);
+            l = (l + 1) &gt;&gt; 1; r = (r - 1) &gt;&gt; 1;
+        }
+        return MergeData(lRes, rRes);
+    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private void Propagate(int ind) { for (int i = Height - 1; i &gt;= 1; i--) { Eval(ind &gt;&gt; i); } return; }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private void Propagate(int l, int r)
+    {
+        if (l == r) { Propagate(l); return; }
+        int xor = l ^ r, i = Height - 1;
+        for (; (xor &gt;&gt; i) == 0; i--) { Eval(l &gt;&gt; i); }
+        for (; i &gt;= 1; i--) { Eval(l &gt;&gt; i); Eval(r &gt;&gt; i); }
+    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private DataT Reflect(int ind) { return Operate(Data[ind], Operators[ind]); }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private void Eval(int ind)
+    {
+        int l = ind &lt;&lt; 1, r = ind &lt;&lt; 1 | 1;
+        Operators[l] = MergeOperator(Operators[l], Operators[ind]);
+        Operators[r] = MergeOperator(Operators[r], Operators[ind]);
+        Data[ind] = Reflect(ind);
+        Operators[ind] = OperatorIdentity;
+    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private void Calculate(int l, int r)
+    {
+        var xor = l ^ r;
+        while (xor &gt; 1) { xor &gt;&gt;= 1; l &gt;&gt;= 1; r &gt;&gt;= 1; Data[l] = MergeData(Reflect(l &lt;&lt; 1), Reflect((l &lt;&lt; 1) | 1)); Data[r] = MergeData(Reflect(r &lt;&lt; 1), Reflect((r &lt;&lt; 1) | 1)); }
+        while (l &gt; 1) { l &gt;&gt;= 1; Data[l] = MergeData(Reflect(l &lt;&lt; 1), Reflect((l &lt;&lt; 1) | 1)); }
     }
 }</Code>
     </Snippet>
@@ -3147,7 +3305,7 @@ public int Select(int k, int kind)
     const int BUF_SIZE = 1 &lt;&lt; 12;
     static Stream Stream = Console.OpenStandardInput();
     static byte[] Buffer = new byte[BUF_SIZE];
-    static int ptr = 0;
+    static int ptr = BUF_SIZE - 1;
     static void Move() { if (++ptr &gt;= Buffer.Length) { Stream.Read(Buffer, 0, BUF_SIZE); ptr = 0; } }
 }</Code>
     </Snippet>
