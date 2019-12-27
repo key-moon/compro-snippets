@@ -1943,8 +1943,7 @@ static int PopCount($T$ n)
     private TValue[] data = new TValue[65536];
     private TKey[] keys = new TKey[65536];
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public PriorityQueue(Func&lt;TValue, TKey&gt; keySelector, bool descendance = false)
-    { KeySelector = keySelector; Descendance = descendance; }
+    public PriorityQueue(Func&lt;TValue, TKey&gt; keySelector, bool descendance = false) { KeySelector = keySelector; Descendance = descendance; }
     public TValue Top
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1954,8 +1953,8 @@ static int PopCount($T$ n)
     public TValue Pop()
     {
         var top = Top;
-        var item = data[Count--];
-        var key = KeySelector(item);
+        var item = data[Count];
+        var key = keys[Count--];
         int index = 1;
         while (true)
         {
@@ -2001,6 +2000,7 @@ static int PopCount($T$ n)
         data.CopyTo(newData, 0);
         keys.CopyTo(newKeys, 0);
         data = newData;
+        keys = newKeys;
     }
     private void ValidateNonEmpty() { if (Count == 0) throw new IndexOutOfRangeException(); }
 }</Code>
