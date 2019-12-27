@@ -7,6 +7,7 @@ using System;
 using MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute;
 using MethodImplOptions = System.Runtime.CompilerServices.MethodImplOptions;
 
+
 class PriorityQueue<TValue, TKey> where TKey : IComparable<TKey>
 {
     public int Count { get; private set; }
@@ -15,8 +16,7 @@ class PriorityQueue<TValue, TKey> where TKey : IComparable<TKey>
     private TValue[] data = new TValue[65536];
     private TKey[] keys = new TKey[65536];
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public PriorityQueue(Func<TValue, TKey> keySelector, bool descendance = false)
-    { KeySelector = keySelector; Descendance = descendance; }
+    public PriorityQueue(Func<TValue, TKey> keySelector, bool descendance = false) { KeySelector = keySelector; Descendance = descendance; }
     public TValue Top
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -26,8 +26,8 @@ class PriorityQueue<TValue, TKey> where TKey : IComparable<TKey>
     public TValue Pop()
     {
         var top = Top;
-        var item = data[Count--];
-        var key = KeySelector(item);
+        var item = data[Count];
+        var key = keys[Count--];
         int index = 1;
         while (true)
         {
@@ -73,6 +73,7 @@ class PriorityQueue<TValue, TKey> where TKey : IComparable<TKey>
         data.CopyTo(newData, 0);
         keys.CopyTo(newKeys, 0);
         data = newData;
+        keys = newKeys;
     }
     private void ValidateNonEmpty() { if (Count == 0) throw new IndexOutOfRangeException(); }
 }
