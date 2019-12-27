@@ -71,8 +71,8 @@ class FoldableDeque<T>
     private void Reconstruct()
     {
         int ind;
-        FrontValues = new Stack<T>();
-        BackValues = new Stack<T>();
+        FrontValues.Clear();
+        BackValues.Clear();
         if (Count == 0) return;
         ind = (FrontInd + (Count >> 1)) & data.Length - 1;
         BackValues.Push(data[ind]);
