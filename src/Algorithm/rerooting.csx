@@ -12,55 +12,55 @@ class ReRooting<T>
 {
     public int NodeCount { get; private set; }
 
-    int[][] Neighbours;
-    int[][] IndexForNeighbours;
+    int[][] Adjacents;
+    int[][] IndexForAdjacent;
 
     T[] Res;
-    T[][] dp;
+    T[][] DP;
 
-    T IdentityElement;
+    T Identity;
     Func<T, T, T> Operate;
-    Func<T, T> OperateNode;
+    Func<T, int, T> OperateNode;
 
-    public ReRooting(int nodeCount, int[][] edges, T identityElement, Func<T, T, T> operate, Func<T, T> operateNode)
+    public ReRooting(int nodeCount, int[][] edges, T identity, Func<T, T, T> operate, Func<T, int, T> operateNode)
     {
         NodeCount = nodeCount;
 
-        IdentityElement = identityElement;
+        Identity = identity;
         Operate = operate;
         OperateNode = operateNode;
 
-        List<int>[] neighbours = new List<int>[nodeCount];
-        List<int>[] indexForNeighbours = new List<int>[nodeCount];
+        List<int>[] adjacents = new List<int>[nodeCount];
+        List<int>[] indexForAdjacents = new List<int>[nodeCount];
 
         for (int i = 0; i < nodeCount; i++)
         {
-            neighbours[i] = new List<int>();
-            indexForNeighbours[i] = new List<int>();
+            adjacents[i] = new List<int>();
+            indexForAdjacents[i] = new List<int>();
         }
         for (int i = 0; i < edges.Length; i++)
         {
             var edge = edges[i];
-            indexForNeighbours[edge[0]].Add(neighbours[edge[1]].Count);
-            indexForNeighbours[edge[1]].Add(neighbours[edge[0]].Count);
-            neighbours[edge[0]].Add(edge[1]);
-            neighbours[edge[1]].Add(edge[0]);
+            indexForAdjacents[edge[0]].Add(adjacents[edge[1]].Count);
+            indexForAdjacents[edge[1]].Add(adjacents[edge[0]].Count);
+            adjacents[edge[0]].Add(edge[1]);
+            adjacents[edge[1]].Add(edge[0]);
         }
 
-        Neighbours = new int[nodeCount][];
-        IndexForNeighbours = new int[nodeCount][];
+        Adjacents = new int[nodeCount][];
+        IndexForAdjacent = new int[nodeCount][];
         for (int i = 0; i < nodeCount; i++)
         {
-            Neighbours[i] = neighbours[i].ToArray();
-            IndexForNeighbours[i] = indexForNeighbours[i].ToArray();
+            Adjacents[i] = adjacents[i].ToArray();
+            IndexForAdjacent[i] = indexForAdjacents[i].ToArray();
         }
 
-        dp = new T[Neighbours.Length][];
-        Res = new T[Neighbours.Length];
+        DP = new T[Adjacents.Length][];
+        Res = new T[Adjacents.Length];
 
-        for (int i = 0; i < Neighbours.Length; i++) dp[i] = new T[Neighbours[i].Length];
+        for (int i = 0; i < Adjacents.Length; i++) DP[i] = new T[Adjacents[i].Length];
         if (NodeCount > 1) Initialize();
-        else Res[0] = OperateNode(IdentityElement);
+        else if (NodeCount == 1) Res[0] = OperateNode(Identity, 0);
     }
 
     public T Query(int node) => Res[node];
@@ -79,12 +79,12 @@ class ReRooting<T>
         {
             var node = stack.Pop();
             order[index++] = node;
-            for (int i = 0; i < Neighbours[node].Length; i++)
+            for (int i = 0; i < Adjacents[node].Length; i++)
             {
-                var neighbour = Neighbours[node][i];
-                if (neighbour == parents[node]) continue;
-                stack.Push(neighbour);
-                parents[neighbour] = node;
+                var adjacent = Adjacents[node][i];
+                if (adjacent == parents[node]) continue;
+                stack.Push(adjacent);
+                parents[adjacent] = node;
             }
         }
         #endregion
@@ -95,18 +95,18 @@ class ReRooting<T>
             var node = order[i];
             var parent = parents[node];
 
-            T accum = IdentityElement;
-            int neighbourIndex = -1;
-            for (int j = 0; j < Neighbours[node].Length; j++)
+            T accum = Identity;
+            int parentIndex = -1;
+            for (int j = 0; j < Adjacents[node].Length; j++)
             {
-                if (Neighbours[node][j] == parent)
+                if (Adjacents[node][j] == parent)
                 {
-                    neighbourIndex = j;
+                    parentIndex = j;
                     continue;
                 }
-                accum = Operate(accum, dp[node][j]);
+                accum = Operate(accum, DP[node][j]);
             }
-            dp[parent][IndexForNeighbours[node][neighbourIndex]] = OperateNode(accum);
+            DP[parent][IndexForAdjacent[node][parentIndex]] = OperateNode(accum, node);
         }
         #endregion
 
@@ -114,16 +114,16 @@ class ReRooting<T>
         for (int i = 0; i < order.Length; i++)
         {
             var node = order[i];
-            T accum = IdentityElement;
-            T[] accumsFromTail = new T[Neighbours[node].Length];
-            accumsFromTail[accumsFromTail.Length - 1] = IdentityElement;
-            for (int j = accumsFromTail.Length - 1; j >= 1; j--) accumsFromTail[j - 1] = Operate(dp[node][j], accumsFromTail[j]);
+            T accum = Identity;
+            T[] accumsFromTail = new T[Adjacents[node].Length];
+            accumsFromTail[accumsFromTail.Length - 1] = Identity;
+            for (int j = accumsFromTail.Length - 1; j >= 1; j--) accumsFromTail[j - 1] = Operate(DP[node][j], accumsFromTail[j]);
             for (int j = 0; j < accumsFromTail.Length; j++)
             {
-                dp[Neighbours[node][j]][IndexForNeighbours[node][j]] = OperateNode(Operate(accum, accumsFromTail[j]));
-                accum = Operate(accum, dp[node][j]);
+                DP[Adjacents[node][j]][IndexForAdjacent[node][j]] = OperateNode(Operate(accum, accumsFromTail[j]), node);
+                accum = Operate(accum, DP[node][j]);
             }
-            Res[node] = OperateNode(accum);
+            Res[node] = OperateNode(accum, node);
         }
         #endregion
     }
