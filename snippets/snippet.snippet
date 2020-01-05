@@ -132,55 +132,55 @@
 {
     public int NodeCount { get; private set; }
 
-    int[][] Neighbours;
-    int[][] IndexForNeighbours;
+    int[][] Adjacents;
+    int[][] IndexForAdjacent;
 
     T[] Res;
-    T[][] dp;
+    T[][] DP;
 
-    T IdentityElement;
+    T Identity;
     Func&lt;T, T, T&gt; Operate;
-    Func&lt;T, T&gt; OperateNode;
+    Func&lt;T, int, T&gt; OperateNode;
 
-    public ReRooting(int nodeCount, int[][] edges, T identityElement, Func&lt;T, T, T&gt; operate, Func&lt;T, T&gt; operateNode)
+    public ReRooting(int nodeCount, int[][] edges, T identity, Func&lt;T, T, T&gt; operate, Func&lt;T, int, T&gt; operateNode)
     {
         NodeCount = nodeCount;
 
-        IdentityElement = identityElement;
+        Identity = identity;
         Operate = operate;
         OperateNode = operateNode;
 
-        List&lt;int&gt;[] neighbours = new List&lt;int&gt;[nodeCount];
-        List&lt;int&gt;[] indexForNeighbours = new List&lt;int&gt;[nodeCount];
+        List&lt;int&gt;[] adjacents = new List&lt;int&gt;[nodeCount];
+        List&lt;int&gt;[] indexForAdjacents = new List&lt;int&gt;[nodeCount];
 
         for (int i = 0; i &lt; nodeCount; i++)
         {
-            neighbours[i] = new List&lt;int&gt;();
-            indexForNeighbours[i] = new List&lt;int&gt;();
+            adjacents[i] = new List&lt;int&gt;();
+            indexForAdjacents[i] = new List&lt;int&gt;();
         }
         for (int i = 0; i &lt; edges.Length; i++)
         {
             var edge = edges[i];
-            indexForNeighbours[edge[0]].Add(neighbours[edge[1]].Count);
-            indexForNeighbours[edge[1]].Add(neighbours[edge[0]].Count);
-            neighbours[edge[0]].Add(edge[1]);
-            neighbours[edge[1]].Add(edge[0]);
+            indexForAdjacents[edge[0]].Add(adjacents[edge[1]].Count);
+            indexForAdjacents[edge[1]].Add(adjacents[edge[0]].Count);
+            adjacents[edge[0]].Add(edge[1]);
+            adjacents[edge[1]].Add(edge[0]);
         }
 
-        Neighbours = new int[nodeCount][];
-        IndexForNeighbours = new int[nodeCount][];
+        Adjacents = new int[nodeCount][];
+        IndexForAdjacent = new int[nodeCount][];
         for (int i = 0; i &lt; nodeCount; i++)
         {
-            Neighbours[i] = neighbours[i].ToArray();
-            IndexForNeighbours[i] = indexForNeighbours[i].ToArray();
+            Adjacents[i] = adjacents[i].ToArray();
+            IndexForAdjacent[i] = indexForAdjacents[i].ToArray();
         }
 
-        dp = new T[Neighbours.Length][];
-        Res = new T[Neighbours.Length];
+        DP = new T[Adjacents.Length][];
+        Res = new T[Adjacents.Length];
 
-        for (int i = 0; i &lt; Neighbours.Length; i++) dp[i] = new T[Neighbours[i].Length];
+        for (int i = 0; i &lt; Adjacents.Length; i++) DP[i] = new T[Adjacents[i].Length];
         if (NodeCount &gt; 1) Initialize();
-        else Res[0] = OperateNode(IdentityElement);
+        else if (NodeCount == 1) Res[0] = OperateNode(Identity, 0);
     }
 
     public T Query(int node) =&gt; Res[node];
@@ -199,12 +199,12 @@
         {
             var node = stack.Pop();
             order[index++] = node;
-            for (int i = 0; i &lt; Neighbours[node].Length; i++)
+            for (int i = 0; i &lt; Adjacents[node].Length; i++)
             {
-                var neighbour = Neighbours[node][i];
-                if (neighbour == parents[node]) continue;
-                stack.Push(neighbour);
-                parents[neighbour] = node;
+                var adjacent = Adjacents[node][i];
+                if (adjacent == parents[node]) continue;
+                stack.Push(adjacent);
+                parents[adjacent] = node;
             }
         }
         #endregion
@@ -215,18 +215,18 @@
             var node = order[i];
             var parent = parents[node];
 
-            T accum = IdentityElement;
-            int neighbourIndex = -1;
-            for (int j = 0; j &lt; Neighbours[node].Length; j++)
+            T accum = Identity;
+            int parentIndex = -1;
+            for (int j = 0; j &lt; Adjacents[node].Length; j++)
             {
-                if (Neighbours[node][j] == parent)
+                if (Adjacents[node][j] == parent)
                 {
-                    neighbourIndex = j;
+                    parentIndex = j;
                     continue;
                 }
-                accum = Operate(accum, dp[node][j]);
+                accum = Operate(accum, DP[node][j]);
             }
-            dp[parent][IndexForNeighbours[node][neighbourIndex]] = OperateNode(accum);
+            DP[parent][IndexForAdjacent[node][parentIndex]] = OperateNode(accum, node);
         }
         #endregion
 
@@ -234,16 +234,16 @@
         for (int i = 0; i &lt; order.Length; i++)
         {
             var node = order[i];
-            T accum = IdentityElement;
-            T[] accumsFromTail = new T[Neighbours[node].Length];
-            accumsFromTail[accumsFromTail.Length - 1] = IdentityElement;
-            for (int j = accumsFromTail.Length - 1; j &gt;= 1; j--) accumsFromTail[j - 1] = Operate(dp[node][j], accumsFromTail[j]);
+            T accum = Identity;
+            T[] accumsFromTail = new T[Adjacents[node].Length];
+            accumsFromTail[accumsFromTail.Length - 1] = Identity;
+            for (int j = accumsFromTail.Length - 1; j &gt;= 1; j--) accumsFromTail[j - 1] = Operate(DP[node][j], accumsFromTail[j]);
             for (int j = 0; j &lt; accumsFromTail.Length; j++)
             {
-                dp[Neighbours[node][j]][IndexForNeighbours[node][j]] = OperateNode(Operate(accum, accumsFromTail[j]));
-                accum = Operate(accum, dp[node][j]);
+                DP[Adjacents[node][j]][IndexForAdjacent[node][j]] = OperateNode(Operate(accum, accumsFromTail[j]), node);
+                accum = Operate(accum, DP[node][j]);
             }
-            Res[node] = OperateNode(accum);
+            Res[node] = OperateNode(accum, node);
         }
         #endregion
     }
@@ -1070,6 +1070,63 @@
   </CodeSnippet>
   <CodeSnippet Format="1.0.0">
     <Header>
+      <Title>primes</Title>
+      <Shortcut>Primes</Shortcut>
+      <Description>�f����񋓂���</Description>
+      <Author>keymoon</Author>
+    </Header>
+    <Snippet>
+      <Imports>
+        <Import>
+          <Namespace>System</Namespace>
+        </Import>
+        <Import>
+          <Namespace>System.Collections.Generic</Namespace>
+        </Import>
+      </Imports>
+      <Code Language="CSharp">public static IEnumerable&lt;int&gt; Primes(int n)
+{
+    if (n &lt; 2) yield break;
+    yield return 2;
+    ulong[] bitArray = new ulong[(n + 1) / 64 / 2 + 1];
+
+    int[] smallPrimes = { 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61 };
+    foreach (var prime in smallPrimes)
+    {
+        if (n &lt; prime) yield break;
+        yield return prime;
+
+        ulong[] primeMask = new ulong[prime];
+        for (int j = (prime - 3) / 2; j &lt; (prime &lt;&lt; 6); j += prime)
+            primeMask[j &gt;&gt; 6] |= 1UL &lt;&lt; (j &amp; 63);
+
+        int maskInd = 0;
+        for (int i = 0; i &lt; bitArray.Length; i++)
+        {
+            bitArray[i] |= primeMask[maskInd];
+            if (++maskInd == prime) maskInd = 0;
+        }
+    }
+
+    int[] deBruijnIndex = { 0, 1, 59, 2, 60, 40, 54, 3, 61, 32, 49, 41, 55, 19, 35, 4, 62, 52, 30, 33, 50, 12, 14, 42, 56, 16, 27, 20, 36, 23, 44, 5, 63, 58, 39, 53, 31, 48, 18, 34, 51, 29, 11, 13, 15, 26, 22, 43, 57, 38, 47, 17, 28, 10, 25, 21, 37, 46, 9, 24, 45, 8, 7, 6 };
+    int maxInd = n / 2;
+    for (int i = 0; i &lt; bitArray.Length; i++)
+    {
+        for (ulong bit = ~bitArray[i]; bit != 0; bit &amp;= bit - 1)
+        {
+            int index = i &lt;&lt; 6 | deBruijnIndex[((bit &amp; (~bit + 1)) * 0x03F566ED27179461UL) &gt;&gt; 58];
+            int prime = (index &lt;&lt; 1) + 3;
+            if (n &lt; prime) yield break;
+            yield return prime;
+            for (int ind = index; ind &lt;= maxInd; ind += prime)
+                bitArray[ind &gt;&gt; 6] |= 1UL &lt;&lt; (ind &amp; 63);
+        }
+    }
+}</Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
       <Title>AbortFunc</Title>
       <Shortcut>abortfun</Shortcut>
       <Description>messageを出力してプログラムを終了する</Description>
@@ -1198,6 +1255,42 @@ class Random
         _xorshift ^= _xorshift &lt;&lt; 7;
         _xorshift ^= _xorshift &gt;&gt; 9;
     }
+}</Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>Top2</Title>
+      <Shortcut>Top2</Shortcut>
+      <Description>�ŏ��2�̗v�f��Ԃ�</Description>
+      <Author>keymoon</Author>
+    </Header>
+    <Snippet>
+      <Imports>
+        <Import>
+          <Namespace>System</Namespace>
+        </Import>
+      </Imports>
+      <Code Language="CSharp">struct Top2&lt;T&gt; where T : IComparable&lt;T&gt;
+{
+    public T First;
+    public T Second;
+    public Top2(T first, T second) { First = first; Second = second; }
+    public static Top2&lt;T&gt; Merge(Top2&lt;T&gt; a, Top2&lt;T&gt; b)
+    {
+        if (a.First.CompareTo(b.First) &gt; 0)
+            return new Top2&lt;T&gt;(a.First, a.Second.CompareTo(b.First) &gt; 0 ? a.Second : b.First);
+        else 
+            return new Top2&lt;T&gt;(b.First, b.Second.CompareTo(a.First) &gt; 0 ? b.Second : a.First);
+    }
+    public static Top2&lt;T&gt; Merge(Top2&lt;T&gt; a, T b)
+    {
+        if (a.Second.CompareTo(b) &gt; 0) return a;
+        if (a.First.CompareTo(b) &gt; 0) return new Top2&lt;T&gt;(a.First, b);
+        return new Top2&lt;T&gt;(b, a.First);
+    }
+    public static Top2&lt;T&gt; operator |(Top2&lt;T&gt; a, Top2&lt;T&gt; b) =&gt; Merge(a, b);
+    public static Top2&lt;T&gt; operator |(Top2&lt;T&gt; a, T b) =&gt; Merge(a, b);
 }</Code>
     </Snippet>
   </CodeSnippet>
