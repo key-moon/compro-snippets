@@ -1072,7 +1072,7 @@
     <Header>
       <Title>primes</Title>
       <Shortcut>Primes</Shortcut>
-      <Description>�f����񋓂���</Description>
+      <Description>素数を列挙する</Description>
       <Author>keymoon</Author>
     </Header>
     <Snippet>
@@ -1262,7 +1262,7 @@ class Random
     <Header>
       <Title>Top2</Title>
       <Shortcut>Top2</Shortcut>
-      <Description>�ŏ��2�̗v�f��Ԃ�</Description>
+      <Description>最上位2つの要素を返す</Description>
       <Author>keymoon</Author>
     </Header>
     <Snippet>
@@ -1280,7 +1280,7 @@ class Random
     {
         if (a.First.CompareTo(b.First) &gt; 0)
             return new Top2&lt;T&gt;(a.First, a.Second.CompareTo(b.First) &gt; 0 ? a.Second : b.First);
-        else 
+        else
             return new Top2&lt;T&gt;(b.First, b.Second.CompareTo(a.First) &gt; 0 ? b.Second : a.First);
     }
     public static Top2&lt;T&gt; Merge(Top2&lt;T&gt; a, T b)

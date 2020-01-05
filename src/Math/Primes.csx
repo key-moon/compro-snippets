@@ -1,6 +1,6 @@
-///Title : primes
+ï»¿///Title : primes
 ///Shortcut : Primes
-///Description : ‘f”‚ğ—ñ‹“‚·‚é
+///Description : ç´ æ•°ã‚’åˆ—æŒ™ã™ã‚‹
 ///Author : keymoon
 
 using System;

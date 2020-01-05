@@ -1,6 +1,6 @@
-///Title : Top2
+ï»¿///Title : Top2
 ///Shortcut : Top2
-///Description : ÅãˆÊ2‚Â‚Ì—v‘f‚ğ•Ô‚·
+///Description : æœ€ä¸Šä½2ã¤ã®è¦ç´ ã‚’è¿”ã™
 ///Author : keymoon
 
 using System;
@@ -14,7 +14,7 @@ struct Top2<T> where T : IComparable<T>
     {
         if (a.First.CompareTo(b.First) > 0)
             return new Top2<T>(a.First, a.Second.CompareTo(b.First) > 0 ? a.Second : b.First);
-        else 
+        else
             return new Top2<T>(b.First, b.Second.CompareTo(a.First) > 0 ? b.Second : a.First);
     }
     public static Top2<T> Merge(Top2<T> a, T b)
