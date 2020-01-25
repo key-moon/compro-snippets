@@ -62,7 +62,7 @@ class RollingHash
     private static ulong CalcMod(ulong val)
     {
         val = (val & MOD) + (val >> 61);
-        if (val > MOD) val -= MOD;
+        if (val >= MOD) val -= MOD;
         return val;
     }
 }
