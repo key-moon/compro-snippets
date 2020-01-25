@@ -862,6 +862,25 @@
   </CodeSnippet>
   <CodeSnippet Format="1.0.0">
     <Header>
+      <Title>DisableFlush</Title>
+      <Shortcut>fasto</Shortcut>
+      <Description>Flushを無効化して高速化する</Description>
+      <Author>keymoon</Author>
+    </Header>
+    <Snippet>
+      <Imports>
+        <Import>
+          <Namespace>System</Namespace>
+        </Import>
+        <Import>
+          <Namespace>System.IO</Namespace>
+        </Import>
+      </Imports>
+      <Code Language="CSharp">Console.SetOut(new StreamWriter(Console.OpenStandardOutput()) { AutoFlush = false });</Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
       <Title>Divisors</Title>
       <Shortcut>divisors</Shortcut>
       <Description>約数列挙</Description>
@@ -948,55 +967,36 @@
       <Author>keymoon</Author>
     </Header>
     <Snippet>
-      <Imports>
-        <Import>
-          <Namespace>MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute</Namespace>
-        </Import>
-        <Import>
-          <Namespace>MethodImplOptions = System.Runtime.CompilerServices.MethodImplOptions</Namespace>
-        </Import>
-      </Imports>
       <Code Language="CSharp">struct ModInt
 {
-    const int MOD = 1000000007;
-    const long POSITIVIZER = ((long)MOD) &lt;&lt; 31;
+    public const int Mod = 1000000007;
+    const long POSITIVIZER = ((long)Mod) &lt;&lt; 31;
     long Data;
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public ModInt(long data) { if ((Data = data % MOD) &lt; 0) Data += MOD; }
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public ModInt(long data) { if ((Data = data % Mod) &lt; 0) Data += Mod; }
     public static implicit operator long(ModInt modInt) =&gt; modInt.Data;
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static implicit operator ModInt(long val) =&gt; new ModInt(val);
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static ModInt operator +(ModInt a, int b) =&gt; new ModInt() { Data = (a.Data + b + POSITIVIZER) % MOD };
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static ModInt operator +(ModInt a, int b) =&gt; new ModInt() { Data = (a.Data + b + POSITIVIZER) % Mod };
     public static ModInt operator +(ModInt a, long b) =&gt; new ModInt(a.Data + b);
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static ModInt operator +(ModInt a, ModInt b) { long res = a.Data + b.Data; return new ModInt() { Data = res &gt;= MOD ? res - MOD : res }; }
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static ModInt operator -(ModInt a, int b) =&gt; new ModInt() { Data = (a.Data - b + POSITIVIZER) % MOD };
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static ModInt operator +(ModInt a, ModInt b) { long res = a.Data + b.Data; return new ModInt() { Data = res &gt;= Mod ? res - Mod : res }; }
+    public static ModInt operator -(ModInt a, int b) =&gt; new ModInt() { Data = (a.Data - b + POSITIVIZER) % Mod };
     public static ModInt operator -(ModInt a, long b) =&gt; new ModInt(a.Data - b);
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static ModInt operator -(ModInt a, ModInt b) { long res = a.Data - b.Data; return new ModInt() { Data = res &lt; 0 ? res + MOD : res }; }
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static ModInt operator -(ModInt a, ModInt b) { long res = a.Data - b.Data; return new ModInt() { Data = res &lt; 0 ? res + Mod : res }; }
     public static ModInt operator *(ModInt a, int b) =&gt; new ModInt(a.Data * b);
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ModInt operator *(ModInt a, long b) =&gt; a * new ModInt(b);
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static ModInt operator *(ModInt a, ModInt b) =&gt; new ModInt() { Data = a.Data * b.Data % MOD };
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static ModInt operator /(ModInt a, ModInt b) =&gt; new ModInt() { Data = a.Data * GetInverse(b) % MOD };
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static ModInt operator *(ModInt a, ModInt b) =&gt; new ModInt() { Data = a.Data * b.Data % Mod };
+    public static ModInt operator /(ModInt a, ModInt b) =&gt; new ModInt() { Data = a.Data * GetInverse(b) % Mod };
+    public static bool operator ==(ModInt a, ModInt b) =&gt; a.Data == b.Data;
+    public static bool operator !=(ModInt a, ModInt b) =&gt; a.Data != b.Data;
     public override string ToString() =&gt; Data.ToString();
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public override bool Equals(object obj) =&gt; (ModInt)obj == this;
+    public override int GetHashCode() =&gt; (int)Data;
     static long GetInverse(long a)
     {
-        long div, p = MOD, x1 = 1, y1 = 0, x2 = 0, y2 = 1;
+        long div, p = Mod, x1 = 1, y1 = 0, x2 = 0, y2 = 1;
         while (true)
         {
-            if (p == 1) return x2 + MOD; div = a / p; x1 -= x2 * div; y1 -= y2 * div; a %= p;
-            if (a == 1) return x1 + MOD; div = p / a; x2 -= x1 * div; y2 -= y1 * div; p %= a;
+            if (p == 1) return x2 + Mod; div = a / p; x1 -= x2 * div; y1 -= y2 * div; a %= p;
+            if (a == 1) return x1 + Mod; div = p / a; x2 -= x1 * div; y2 -= y1 * div; p %= a;
         }
     }
 }</Code>
@@ -1088,7 +1088,7 @@
 {
     if (n &lt; 2) yield break;
     yield return 2;
-    ulong[] bitArray = new ulong[(n + 1) / 64 / 2 + 1];
+    ulong[] bitArray = new ulong[(n + 1) / 2 / 64 + 1];
 
     int[] smallPrimes = { 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61 };
     foreach (var prime in smallPrimes)
@@ -1096,15 +1096,15 @@
         if (n &lt; prime) yield break;
         yield return prime;
 
-        ulong[] primeMask = new ulong[prime];
-        for (int j = (prime - 3) / 2; j &lt; (prime &lt;&lt; 6); j += prime)
-            primeMask[j &gt;&gt; 6] |= 1UL &lt;&lt; (j &amp; 63);
+        ulong[] mask = new ulong[prime];
+        for (int j = (prime - 3) &gt;&gt; 1; j &lt; (prime &lt;&lt; 6); j += prime)
+            mask[j &gt;&gt; 6] |= 1UL &lt;&lt; j;
 
         int maskInd = 0;
         for (int i = 0; i &lt; bitArray.Length; i++)
         {
-            bitArray[i] |= primeMask[maskInd];
-            if (++maskInd == prime) maskInd = 0;
+            bitArray[i] |= mask[maskInd];
+            if (++maskInd &gt;= prime) maskInd = 0;
         }
     }
 
@@ -1119,7 +1119,7 @@
             if (n &lt; prime) yield break;
             yield return prime;
             for (int ind = index; ind &lt;= maxInd; ind += prime)
-                bitArray[ind &gt;&gt; 6] |= 1UL &lt;&lt; (ind &amp; 63);
+                bitArray[ind &gt;&gt; 6] |= 1UL &lt;&lt; ind;
         }
     }
 }</Code>
@@ -1594,7 +1594,7 @@ static void Swap&lt;T&gt;(ref T a, ref T b) { T tmp = a; a = b; b = tmp; }</Code
     private static ulong CalcMod(ulong val)
     {
         val = (val &amp; MOD) + (val &gt;&gt; 61);
-        if (val &gt; MOD) val -= MOD;
+        if (val &gt;= MOD) val -= MOD;
         return val;
     }
 }</Code>
