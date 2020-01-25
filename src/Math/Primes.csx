@@ -14,7 +14,7 @@ public static IEnumerable<int> Primes(int n)
 {
     if (n < 2) yield break;
     yield return 2;
-    ulong[] bitArray = new ulong[(n + 1) / 64 / 2 + 1];
+    ulong[] bitArray = new ulong[(n + 1) / 2 / 64 + 1];
 
     int[] smallPrimes = { 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61 };
     foreach (var prime in smallPrimes)
@@ -22,15 +22,15 @@ public static IEnumerable<int> Primes(int n)
         if (n < prime) yield break;
         yield return prime;
 
-        ulong[] primeMask = new ulong[prime];
-        for (int j = (prime - 3) / 2; j < (prime << 6); j += prime)
-            primeMask[j >> 6] |= 1UL << (j & 63);
+        ulong[] mask = new ulong[prime];
+        for (int j = (prime - 3) >> 1; j < (prime << 6); j += prime)
+            mask[j >> 6] |= 1UL << j;
 
         int maskInd = 0;
         for (int i = 0; i < bitArray.Length; i++)
         {
-            bitArray[i] |= primeMask[maskInd];
-            if (++maskInd == prime) maskInd = 0;
+            bitArray[i] |= mask[maskInd];
+            if (++maskInd >= prime) maskInd = 0;
         }
     }
 
@@ -45,7 +45,7 @@ public static IEnumerable<int> Primes(int n)
             if (n < prime) yield break;
             yield return prime;
             for (int ind = index; ind <= maxInd; ind += prime)
-                bitArray[ind >> 6] |= 1UL << (ind & 63);
+                bitArray[ind >> 6] |= 1UL << ind;
         }
     }
 }
