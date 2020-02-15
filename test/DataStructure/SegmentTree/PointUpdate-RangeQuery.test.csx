@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 
 var nq = Console.ReadLine().Split().Select(int.Parse).ToArray();
-var (n, q) = (nq[0], nq[1]);
+var (n, q) = (nq[0], nq[1]);//test update
 SegmentTree<int> segTree = new SegmentTree<int>(n, int.MaxValue, Math.Min);
 for (int i = 0; i < q; i++)
 {
