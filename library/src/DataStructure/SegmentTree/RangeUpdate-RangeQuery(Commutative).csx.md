@@ -31,7 +31,7 @@ layout: default
 
 * category: <a href="../../../../index.html#5953e6c7c1ed72d211284e9a01174d16">src/DataStructure/SegmentTree</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/DataStructure/SegmentTree/RangeUpdate-RangeQuery(Commutative).csx">View this file on GitHub</a>
-    - Last commit date: 1970-01-01 00:00:00
+    - Last commit date: 2019-12-27 11:03:56+09:00
 
 
 
@@ -173,7 +173,7 @@ class SegmentTree<DataT, OperatorT>
 Traceback (most recent call last):
   File "/opt/hostedtoolcache/Python/3.8.2/x64/lib/python3.8/site-packages/onlinejudge_verify/docs.py", line 340, in write_contents
     bundled_code = language.bundle(self.file_class.file_path, basedir=pathlib.Path.cwd())
-  File "/opt/hostedtoolcache/Python/3.8.2/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/csharpscript.py", line 108, in bundle
+  File "/opt/hostedtoolcache/Python/3.8.2/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/csharpscript.py", line 110, in bundle
     raise NotImplementedError
 NotImplementedError
 

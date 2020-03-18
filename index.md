@@ -34,13 +34,6 @@ layout: default
 
 ## Library Files
 
-<div id="25d902c24283ab8cfbac54dfa101ad31"></div>
-
-### src
-
-* :heavy_check_mark: <a href="library/src/test-bracket().csx.html">src/test-bracket().csx</a>
-
-
 <div id="e523881891a17947848207af929a3b93"></div>
 
 ### src/2DGeometry
@@ -305,6 +298,5 @@ layout: default
 * :heavy_check_mark: <a href="verify/test/DataStructure/UnionFind/PotentializedUnionFind.test.csx.html">test/DataStructure/UnionFind/PotentializedUnionFind.test.csx</a>
 * :heavy_check_mark: <a href="verify/test/DataStructure/UnionFind/UnionFind.test.csx.html">test/DataStructure/UnionFind/UnionFind.test.csx</a>
 * :heavy_check_mark: <a href="verify/test/Math/Primes.test.csx.html">test/Math/Primes.test.csx</a>
-* :heavy_check_mark: <a href="verify/test/test-bracket().test.csx.html">test/test-bracket().test.csx</a>
 
 

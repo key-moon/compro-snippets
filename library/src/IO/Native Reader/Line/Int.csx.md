@@ -31,7 +31,7 @@ layout: default
 
 * category: <a href="../../../../../index.html#d28549bdbabcffc69676f26b210c99e4">src/IO/Native Reader/Line</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/IO/Native Reader/Line/Int.csx">View this file on GitHub</a>
-    - Last commit date: 1970-01-01 00:00:00
+    - Last commit date: 2019-11-20 02:54:11+09:00
 
 
 
@@ -65,7 +65,7 @@ Enumerable.Repeat(0, @n).Select(_ => int.Parse(Console.ReadLine())).ToArray()
 Traceback (most recent call last):
   File "/opt/hostedtoolcache/Python/3.8.2/x64/lib/python3.8/site-packages/onlinejudge_verify/docs.py", line 340, in write_contents
     bundled_code = language.bundle(self.file_class.file_path, basedir=pathlib.Path.cwd())
-  File "/opt/hostedtoolcache/Python/3.8.2/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/csharpscript.py", line 108, in bundle
+  File "/opt/hostedtoolcache/Python/3.8.2/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/csharpscript.py", line 110, in bundle
     raise NotImplementedError
 NotImplementedError
 

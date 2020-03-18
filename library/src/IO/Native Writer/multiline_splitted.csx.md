@@ -31,7 +31,7 @@ layout: default
 
 * category: <a href="../../../../index.html#581f59e7f341bcb859155b3903145b71">src/IO/Native Writer</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/IO/Native Writer/multiline_splitted.csx">View this file on GitHub</a>
-    - Last commit date: 1970-01-01 00:00:00
+    - Last commit date: 2019-11-23 16:53:50+09:00
 
 
 
@@ -64,7 +64,7 @@ Console.WriteLine(string.Join("\n", collection.Select(x => string.Join(" ", x)))
 Traceback (most recent call last):
   File "/opt/hostedtoolcache/Python/3.8.2/x64/lib/python3.8/site-packages/onlinejudge_verify/docs.py", line 340, in write_contents
     bundled_code = language.bundle(self.file_class.file_path, basedir=pathlib.Path.cwd())
-  File "/opt/hostedtoolcache/Python/3.8.2/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/csharpscript.py", line 108, in bundle
+  File "/opt/hostedtoolcache/Python/3.8.2/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/csharpscript.py", line 110, in bundle
     raise NotImplementedError
 NotImplementedError
 
