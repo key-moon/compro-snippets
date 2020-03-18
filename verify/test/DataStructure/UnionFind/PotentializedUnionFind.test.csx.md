@@ -25,15 +25,16 @@ layout: default
 <link rel="stylesheet" href="../../../../assets/css/copy-button.css" />
 
 
-# :warning: src/DataStructure/UnionFind/UnionFind.csx
+# :heavy_check_mark: test/DataStructure/UnionFind/PotentializedUnionFind.test.csx
 
 <a href="../../../../index.html">Back to top page</a>
 
-* category: <a href="../../../../index.html#657c57e2fafbaee71dc36bfd3721bb15">src/DataStructure/UnionFind</a>
-* <a href="{{ site.github.repository_url }}/blob/master/src/DataStructure/UnionFind/UnionFind.csx">View this file on GitHub</a>
-    - Last commit date: 2019-09-23 15:24:39+09:00
+* category: <a href="../../../../index.html#33e5eccf684d6653f8b65b9ad5a4655d">test/DataStructure/UnionFind</a>
+* <a href="{{ site.github.repository_url }}/blob/master/test/DataStructure/UnionFind/PotentializedUnionFind.test.csx">View this file on GitHub</a>
+    - Last commit date: 2020-03-18 21:16:49+09:00
 
 
+* see: <a href="https://onlinejudge.u-aizu.ac.jp/courses/library/3/DSL/1/DSL_1_B">https://onlinejudge.u-aizu.ac.jp/courses/library/3/DSL/1/DSL_1_B</a>
 
 
 ## Code
@@ -41,51 +42,32 @@ layout: default
 <a id="unbundled"></a>
 {% raw %}
 ```cpp
-﻿///Title : UnionFind
-///Shortcut : uf
-///Description : 素集合データ構造
-///Author : keymoon
+﻿#load "../../../src/DataStructure/UnionFind/PotentializedUnionFind.csx"
+#pragma PROBLEM https://onlinejudge.u-aizu.ac.jp/courses/library/3/DSL/1/DSL_1_B
 
-using System.Collections.Generic;
+using System;
 using System.Linq;
-using MethodImplOptions = System.Runtime.CompilerServices.MethodImplOptions;
-using MethodImplAttribute = System.Runtime.CompilerServices.MethodImplAttribute;
 
-class UnionFind
+var nq = Console.ReadLine().Split().Select(int.Parse).ToArray();
+var (n, q) = (nq[0], nq[1]);
+
+PotentializedUnionFind<int> uf = new PotentializedUnionFind<int>(n, (x, y) => x + y, x => -x, 0);
+
+for (int i = 0; i < q; i++)
 {
-    public int Size { get; private set; }
-    public int GroupCount { get; private set; }
-    public IEnumerable<int> AllRepresents => Parent.Where((x, y) => x == y);
-    int[] Sizes;
-    int[] Parent;
-    public UnionFind(int count)
+    var query = Console.ReadLine().Split().Select(int.Parse).ToArray();
+    if (query[0] == 0)
     {
-        Size = count;
-        GroupCount = count;
-        Parent = new int[count];
-        Sizes = new int[count];
-        for (int i = 0; i < count; i++) Sizes[Parent[i] = i] = 1;
+        var (x, y, z) = (query[1], query[2], query[3]);
+        uf.TryUnite(x, y, z);
     }
-    public bool TryUnite(int x, int y)
+    else
     {
-        int xp = Find(x);
-        int yp = Find(y);
-        if (yp == xp) return false;
-        if (Sizes[xp] < Sizes[yp]) { var tmp = xp; xp = yp; yp = tmp; }
-        GroupCount--;
-        Parent[yp] = xp;
-        Sizes[xp] += Sizes[yp];
-        return true;
-    }
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public int GetSize(int x) => Sizes[Find(x)];
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public int Find(int x)
-    {
-        while (x != Parent[x]) x = (Parent[x] = Parent[Parent[x]]);
-        return x;
+        var (x, y) = (query[1], query[2]);
+        Console.WriteLine(uf.Find(x) == uf.Find(y) ? uf.GetPotential(y, x).ToString() : "?");
     }
 }
+
 ```
 {% endraw %}
 

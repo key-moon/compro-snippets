@@ -21,19 +21,20 @@ layout: default
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-balloon-js@1.1.2/jquery.balloon.min.js" integrity="sha256-ZEYs9VrgAeNuPvs15E39OsyOJaIkXEEt10fzxJ20+2I=" crossorigin="anonymous"></script>
-<script type="text/javascript" src="../../../../assets/js/copy-button.js"></script>
-<link rel="stylesheet" href="../../../../assets/css/copy-button.css" />
+<script type="text/javascript" src="../../../assets/js/copy-button.js"></script>
+<link rel="stylesheet" href="../../../assets/css/copy-button.css" />
 
 
-# :warning: src/Math/const/1000000007.csx
+# :heavy_check_mark: test/Math/Primes.test.csx
 
-<a href="../../../../index.html">Back to top page</a>
+<a href="../../../index.html">Back to top page</a>
 
-* category: <a href="../../../../index.html#c8cb08aad7fec377b22e9f67b528ce4c">src/Math/const</a>
-* <a href="{{ site.github.repository_url }}/blob/master/src/Math/const/1000000007.csx">View this file on GitHub</a>
-    - Last commit date: 2019-09-23 15:24:39+09:00
+* category: <a href="../../../index.html#0ba367c54975d4d64b0fb7b549b398e6">test/Math</a>
+* <a href="{{ site.github.repository_url }}/blob/master/test/Math/Primes.test.csx">View this file on GitHub</a>
+    - Last commit date: 2020-03-18 18:25:09+09:00
 
 
+* see: <a href="https://judge.yosupo.jp/problem/enumerate_primes">https://judge.yosupo.jp/problem/enumerate_primes</a>
 
 
 ## Code
@@ -41,12 +42,37 @@ layout: default
 <a id="unbundled"></a>
 {% raw %}
 ```cpp
-﻿///Title : 1e9+7
-///Shortcut : mod
-///Description : 1000000007
-///Author : keymoon
+﻿#load "../../src/Math/Primes.csx"
+#pragma PROBLEM https://judge.yosupo.jp/problem/enumerate_primes
 
-1000000007
+using System;
+using System.Linq;
+using System.Text;
+
+var nab = Console.ReadLine().Split().Select(int.Parse).ToArray();
+var (n, a, b) = (nab[0], nab[1], nab[2]);
+
+var next = b;
+
+int count = 0;
+int outCount = 0;
+
+StringBuilder builder = new StringBuilder();
+foreach (var prime in Primes(n))
+{
+    if (count == next)
+    {
+        builder.Append(prime);
+        builder.Append(' ');
+        outCount++;
+        next += a;
+    }
+    count++;
+}
+
+Console.WriteLine($"{count} {outCount}");
+Console.WriteLine(builder.ToString());
+
 ```
 {% endraw %}
 
@@ -63,5 +89,5 @@ NotImplementedError
 ```
 {% endraw %}
 
-<a href="../../../../index.html">Back to top page</a>
+<a href="../../../index.html">Back to top page</a>
 
