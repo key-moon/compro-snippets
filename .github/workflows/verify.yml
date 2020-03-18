@@ -15,12 +15,12 @@ jobs:
     - name: Install dependencies
       run: pip3 install -U online-judge-verify-helper
       
-    # if you want to verify csharp script file.
+    # required only if you want to verify C# script files
     - uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '3.1.101'  # SDK Version to use.
+        dotnet-version: '3.1.101'
     - name: Install dependencies (C#)
-      run: dotnet tool install -g dotnet-script
+      run: dotnet tool install -g dotnet-script && echo ::add-path::$HOME/.dotnet/tools
 
     - name: Check env
       run: echo $PATH
