@@ -1,0 +1,20 @@
+{
+  "loader": {
+    "variables-signature": "DECLARATIONS"
+  },
+  "targets": {
+    "vscode": {
+      "cursor": "/*cursor*/",
+      "snippet-keys": {
+        "name": "title",
+        "prefix": "shortcut"
+      },
+      "package": {
+        "name": "compro-snippet",
+        "version": "0.0.1",
+        "publisher": "keymoon",
+        "engines": { "vscode": "^1.0.0" }
+      }
+    }
+  }
+}
